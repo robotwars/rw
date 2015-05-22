@@ -37,7 +37,7 @@ io.on('connection', function(socket) {
   socket.emit('news', { hello: 'world' });
 
   socket.on('codeupdate', function(data) {
-    console.log(data.code)
+    console.log(data.code, socket.id);
   })
 
   socket.on('disconnect', function() {
