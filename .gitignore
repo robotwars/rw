@@ -3,3 +3,4 @@ rethinkdb_data
 .DS_Store
 *.sublime-*
 public/bundles/
+npm-debug.log
