@@ -1,12 +1,10 @@
 RW
 
-Install global modules
+Install modules
 
 ```
-npm install -g webpack
-npm install -g nodemon
-npm install -g foreman
-``
+npm install
+```
 
 Start server:
 
