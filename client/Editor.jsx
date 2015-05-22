@@ -1,5 +1,6 @@
-import React   from 'react';
+import React      from 'react';
 import Codemirror from 'react-code-mirror';
+const PT          = React.PropTypes;
 
 require('codemirror/mode/javascript/javascript');
 
@@ -50,6 +51,10 @@ class Editor extends React.Component {
     );
   }
 
+}
+
+Editor.propTypes = {
+  socket: PT.any.isRequired
 }
 
 export default Editor;

@@ -1,6 +1,7 @@
 import React     from 'react';
 import Game      from './Game.jsx';
 import Editor    from './Editor.jsx';
+const PT          = React.PropTypes;
 
 class Main extends React.Component {
 
@@ -12,12 +13,16 @@ class Main extends React.Component {
           <Game />
         </div>
         <div className="col col-4">
-          <Editor />
+          <Editor socket={this.props.socket} />
         </div>
       </div>
     );
   }
 
+}
+
+Main.propTypes = {
+  socket: PT.any.isRequired
 }
 
 export default Main;

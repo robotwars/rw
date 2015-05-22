@@ -13,7 +13,7 @@ socket.on('refresh', function(state) {
 });
 
 React.render(
-  <Main />,
+  <Main socket={socket} />,
   document.getElementById('app')
 );
 
