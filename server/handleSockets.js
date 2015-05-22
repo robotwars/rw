@@ -6,7 +6,11 @@ module.exports = function(io) {
     // create a robot for this user
     socket.emit('news', { hello: 'world' });
 
-    socket.on('code:update', function(data) {
+    socket.on('user:info:updated', function(data) {
+      console.log(data.info, socket.id);
+    })
+
+    socket.on('user:code:updated', function(data) {
       console.log(data.code, socket.id);
     })
 

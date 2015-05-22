@@ -1,11 +1,11 @@
 import React      from 'react';
 import Codemirror from 'react-code-mirror';
-const PT          = React.PropTypes;
-
 require('codemirror/mode/javascript/javascript');
 
 import '../node_modules/codemirror/lib/codemirror.css';
 import '../node_modules/codemirror/theme/solarized.css';
+
+const PT          = React.PropTypes;
 
 class Editor extends React.Component {
 
@@ -27,7 +27,7 @@ class Editor extends React.Component {
 
   onSave(event) {
     const socket = this.props.socket;
-    socket.emit('code:update', {
+    socket.emit('user:code:updated', {
       code: this.state.code
     });
   }

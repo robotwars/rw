@@ -1,7 +1,8 @@
-import React     from 'react';
-import Game      from './Game.jsx';
-import Editor    from './Editor.jsx';
-const PT          = React.PropTypes;
+import React      from 'react';
+import Game       from './Game.jsx';
+import Properties from './Properties.jsx';
+import Editor     from './Editor.jsx';
+const  PT         =    React.PropTypes;
 
 class Main extends React.Component {
 
@@ -13,6 +14,7 @@ class Main extends React.Component {
           <Game />
         </div>
         <div className="col col-4">
+          <Properties socket={this.props.socket} />
           <Editor socket={this.props.socket} />
         </div>
       </div>
