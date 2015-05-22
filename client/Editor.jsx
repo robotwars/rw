@@ -27,16 +27,12 @@ class Editor extends React.Component {
 
   render() {
     const code    = this.state.code;
-    const options = {
-      lineNumbers: true
-    };
 
     return (
       <section>
         <div>
           <Codemirror
             style={{border:'1px solid black'}}
-            textAreaClassName={['form-control']}
             textAreaStyle={{minHeight: '5em'}}
             defaultValue={code}
             mode='javascript'
