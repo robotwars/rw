@@ -24,6 +24,13 @@ class Editor extends React.Component {
       code: code
     });
   }
+  
+  onSave(event) {
+    const socket = this.props.socket;
+    socket.emit('codeupdate', {
+        code: this.state.code
+    });
+  }
 
   render() {
     const code    = this.state.code;
@@ -41,7 +48,7 @@ class Editor extends React.Component {
             onChange={this.onChange.bind(this)} />
         </div>
         <div className="mt1">
-          <button>Save</button>
+          <button onClick={this.onSave.bind(this)}>Save</button>
         </div>
       </section>
     );
@@ -49,6 +56,7 @@ class Editor extends React.Component {
 
 }
 
+// 
 Editor.propTypes = {
   socket: PT.any.isRequired
 }

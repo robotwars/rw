@@ -6,7 +6,7 @@ var gameloop = require('node-gameloop');
 app.use(express.static('public'));
 
 app.get('/', function(req, res) {
-  res.sendfile(__dirname + '/public/index.html');
+  res.sendfile(__dirname + 'public/index.html');
 });
 
 var server = app.listen(3000, function() {
@@ -30,8 +30,6 @@ var id = gameloop.setGameLoop(function(delta) {
   io.sockets.emit('refresh', {state: frameCount})
 }, 1000 / 5);
 
-
-
 // user connected
 io.on('connection', function(socket) {
   console.log('connection')
@@ -40,4 +38,7 @@ io.on('connection', function(socket) {
   socket.on('my other event', function(data) {
     console.log(data);
   });
+    socket.on('codeupdate',function(data){
+        console.log(data.code)
+    })
 });
