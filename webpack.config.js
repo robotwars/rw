@@ -17,7 +17,8 @@ module.exports = {
 			{ test: /\.less$/,   loader: "less" },
 			{
 				test: /\.jsx$/,
-				loader: "jsx-loader?stripTypes"
+				exclude: /(node_modules|bower_components)/,
+				loader: 'babel'
 			},
 			{ test: /\.woff$/,   loader: "url-loader?prefix=font/&limit=5000" },
 			{ test: /\.eot$/,    loader: "file-loader?prefix=font/" },
