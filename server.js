@@ -39,4 +39,8 @@ io.on('connection', function(socket) {
   socket.on('codeupdate', function(data) {
     console.log(data.code)
   })
+
+  socket.on('disconnect', function() {
+    console.log('user disconnected');
+  });
 });
