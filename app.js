@@ -15,7 +15,7 @@ app.get('/', function (req, res) {
 var frameCount = 0;
 var id = gameloop.setGameLoop(function(delta) {
 	// `delta` is the delta time from the last frame 
-	console.log('Hi there! (frame=%s, delta=%s)', frameCount++, delta);
+	// console.log('Hi there! (frame=%s, delta=%s)', frameCount++, delta);
 	io.sockets.emit('refresh', {state: frameCount})
 }, 1000 / 5);
 
