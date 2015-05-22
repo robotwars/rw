@@ -3,7 +3,7 @@ var path = require("path");
 module.exports = {
 	context: __dirname,
 	entry: {
-		app:       "./client/app.jsx"
+		app:       "./client/app.js"
 	},
 	output: {
 		path: path.join(__dirname, 'public', 'js'),
