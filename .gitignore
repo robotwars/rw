@@ -2,3 +2,4 @@ node_modules
 rethinkdb_data
 .DS_Store
 *.sublime-*
+public/bundles/
