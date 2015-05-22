@@ -35,10 +35,8 @@ io.on('connection', function(socket) {
   console.log('connection')
   // create a robot for this user
   socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function(data) {
-    console.log(data);
-  });
-    socket.on('codeupdate',function(data){
-        console.log(data.code)
-    })
+
+  socket.on('codeupdate', function(data) {
+    console.log(data.code)
+  })
 });
