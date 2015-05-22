@@ -1,0 +1,9 @@
+{
+  "esprima": "esprima-fb",
+  "fileExtensions": [".js", ".jsx"],
+  "preset": "airbnb",
+  "disallowMixedSpacesAndTabs": "smart",
+  "requirePaddingNewLinesBeforeLineComments": null,
+  "requirePaddingNewLinesAfterBlocks": null,
+  "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties"
+}
