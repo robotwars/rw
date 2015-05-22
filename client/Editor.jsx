@@ -24,11 +24,11 @@ class Editor extends React.Component {
       code: code
     });
   }
-  
+
   onSave(event) {
     const socket = this.props.socket;
-    socket.emit('codeupdate', {
-        code: this.state.code
+    socket.emit('code:update', {
+      code: this.state.code
     });
   }
 
@@ -56,7 +56,6 @@ class Editor extends React.Component {
 
 }
 
-// 
 Editor.propTypes = {
   socket: PT.any.isRequired
 }
