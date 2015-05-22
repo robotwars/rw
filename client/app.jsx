@@ -8,7 +8,7 @@ import '../node_modules/basscss/css/basscss.css';
 var socket = io.connect();
 
 socket.on('refresh', function(state) {
-  console.log('state received', state);
+  // console.log('state received', state);
   // robotStore.add(robot);
 });
 

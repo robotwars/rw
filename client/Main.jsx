@@ -6,11 +6,12 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="col col-6">
+      <div className="container">
+        <h1>RW</h1>
+        <div className="col col-8">
           <Game />
         </div>
-        <div className="col col-6">
+        <div className="col col-4">
           <Editor />
         </div>
       </div>
