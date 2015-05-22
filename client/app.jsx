@@ -8,13 +8,13 @@ import '../node_modules/basscss/css/basscss.css';
 var socket = io.connect();
 
 socket.on('refresh', function(state) {
-	console.log('state received', state);
-	// robotStore.add(robot);
+  console.log('state received', state);
+  // robotStore.add(robot);
 });
 
 React.render(
-	<Main />,
-	document.getElementById('app')
+  <Main />,
+  document.getElementById('app')
 );
 
 // socket.on('robots updated', function(robot) {
