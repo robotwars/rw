@@ -9,7 +9,6 @@ var socket = io.connect();
 
 socket.on('refresh', function(state) {
   // console.log('state received', state);
-  // robotStore.add(robot);
 });
 
 React.render(

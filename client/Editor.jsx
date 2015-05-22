@@ -1,11 +1,11 @@
 import React      from 'react';
 import Codemirror from 'react-code-mirror';
-const PT          = React.PropTypes;
-
 require('codemirror/mode/javascript/javascript');
 
 import '../node_modules/codemirror/lib/codemirror.css';
 import '../node_modules/codemirror/theme/solarized.css';
+
+const PT          = React.PropTypes;
 
 class Editor extends React.Component {
 
@@ -24,11 +24,11 @@ class Editor extends React.Component {
       code: code
     });
   }
-  
+
   onSave(event) {
     const socket = this.props.socket;
-    socket.emit('code:update', {
-        code: this.state.code
+    socket.emit('user:code:updated', {
+      code: this.state.code
     });
   }
 
@@ -56,7 +56,6 @@ class Editor extends React.Component {
 
 }
 
-// 
 Editor.propTypes = {
   socket: PT.any.isRequired
 }
