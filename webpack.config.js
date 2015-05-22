@@ -16,8 +16,7 @@ module.exports = {
       { test: /\.css/,     loader: "style-loader!css-loader" },
       { test: /\.less$/,   loader: "less" },
       {
-        test: /\.jsx$/,
-        exclude: /(node_modules|bower_components)/,
+        test: /\.(jsx|js)$/,
         loader: 'babel'
       },
       { test: /\.woff$/,   loader: "url-loader?prefix=font/&limit=5000" },
