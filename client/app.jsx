@@ -1,5 +1,8 @@
 console.log('APP');
 
+var React   = require('react');
+var Main    = require('./Main.jsx');
+
 // Connect to SocketIO on the same host
 var socket = io.connect();
 
@@ -7,6 +10,11 @@ socket.on('refresh', function(state) {
 	console.log('state received', state);
 	// robotStore.add(robot);
 });
+
+React.render(
+	<Main />,
+	document.getElementById('app')
+);
 
 // socket.on('robots updated', function(robot) {
 //   console.log('Someone updated a Robot', robot);
