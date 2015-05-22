@@ -38,7 +38,9 @@ io.on('connection', function(socket) {
   socket.on('my other event', function(data) {
     console.log(data);
   });
-    socket.on('codeupdate',function(data){
+
+    // Send code to the server
+    socket.on('code:update',function(data){
         console.log(data.code)
     })
 });

@@ -27,7 +27,7 @@ class Editor extends React.Component {
   
   onSave(event) {
     const socket = this.props.socket;
-    socket.emit('codeupdate', {
+    socket.emit('code:update', {
         code: this.state.code
     });
   }
