@@ -4,6 +4,7 @@ var server   = require('http').Server(app);
 var io       = require('socket.io')(server);
 var gameloop = require('node-gameloop');
 
+// serve static assets
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
@@ -15,11 +16,14 @@ app.get('/', function (req, res) {
 var frameCount = 0;
 var id = gameloop.setGameLoop(function(delta) {
 	// `delta` is the delta time from the last frame 
+	frameCount++;
 	// console.log('Hi there! (frame=%s, delta=%s)', frameCount++, delta);
 	io.sockets.emit('refresh', {state: frameCount})
 }, 1000 / 5);
 
 
+
+// user connected
 io.on('connection', function (socket) {
 	console.log('connection')
 	// create a robot for this user
