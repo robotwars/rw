@@ -5,7 +5,6 @@ var saveRobot     = require('./services/saveRobot');
 var getRobotCode  = require('./services/getRobotCode');
 var saveRobotCode = require('./services/saveRobotCode');
 var verifyCode    = require('./services/verifyCode.js');
-var runCode       = require('./services/runCode.js');
 
 module.exports = function(config) {
   var io             = config.io;
@@ -48,16 +47,28 @@ module.exports = function(config) {
     // User has updated and hit save on the code editor
     socket.on('user:code:updated', function(data) {
       var source = data.source;
-      var errors = runCode(source);
-      // if (errors.length) {
-      //   // send message to user
-      // } else {
-      //   // save code
-      // }
-      saveRobotCode(dbConfig, userId, source)
+
+      verifyCode(source)
         .then(function() {
+          return saveRobotCode(dbConfig, userId, source);
+        })
+        .then(function() {
+          console.log('Code is good, saving');
           socket.emit('server:code:saved');
+        })
+        .catch(function(err) {
+          var message = {
+            kind: 'error',
+            value: err.toString()
+          }
+          socket.emit('server:code:error', message);
+          console.log(err);
         });
+
+      // saveRobotCode(dbConfig, userId, source)
+      //   .then(function() {
+      //     socket.emit('server:code:saved');
+      //   });
     });
 
     socket.on('disconnect', function() {
