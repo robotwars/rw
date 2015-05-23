@@ -32,11 +32,12 @@ class Game extends React.Component {
     if (robot != undefined){
       return {
         top: robot['y'] + 45,
-        left: robot['x'],
+        // left: robot['x'],
+        left: this.state.x,
         width: window.innerWidth,
         height: 20,
         lineHeight: 20,
-        fontSize: 12
+        fontSize: 10
       };
     }
   }
