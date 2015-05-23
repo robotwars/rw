@@ -4,8 +4,9 @@ module.exports = function(dbConfig, userId, code) {
   console.log('saveRobotCode', userId, code);
 
   var data = {
-    robotId: userId,
-    code: code
+    robotId:   userId,
+    source:    code,
+    createdAt: new Date()
   }
 
   return r.db(dbConfig.db)

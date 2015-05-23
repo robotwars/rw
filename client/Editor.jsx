@@ -13,13 +13,23 @@ class Editor extends React.Component {
     super(props);
 
     this.state = {
-      code: '// foo'
+      code: this.props.code
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      code: nextProps.code
+    });
+  }
+
   onChange(event) {
-    const code = event.target.value;
-    // console.log(code)
+    const value = event.target.value;
+    let code  = this.state.code;
+
+    code = code || {};
+    code.source = value;
+
     this.setState({
       code: code
     });
@@ -28,12 +38,13 @@ class Editor extends React.Component {
   onSave(event) {
     const socket = this.props.socket;
     socket.emit('user:code:updated', {
-      code: this.state.code
+      source: this.state.code.source
     });
   }
 
   render() {
     const code    = this.state.code;
+    const source  = code.source || '// Your code here';
 
     return (
       <section>
@@ -41,7 +52,7 @@ class Editor extends React.Component {
           <Codemirror
             style={{border:'1px solid black'}}
             textAreaStyle={{minHeight: '5em'}}
-            defaultValue={code}
+            value={source}
             mode='javascript'
             theme='solarized'
             lineNumbers={true}
@@ -57,7 +68,8 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
-  socket: PT.any.isRequired
+  socket: PT.any.isRequired,
+  code:   PT.object.isRequired
 }
 
 export default Editor;

@@ -4,7 +4,12 @@ var r = require('rethinkdbdash')();
 // we save all valid snippets
 module.exports = function(dbConfig, userId) {
   return r.db(dbConfig.db)
-    .table('robots')
-    .get(userId)
-    .run();
+    .table('codes')
+    .filter({robotId: userId})
+    .orderBy('createdAt')
+    .run()
+    .then(function(results) {
+      console.log(results)
+      return results.pop();
+    });
 }

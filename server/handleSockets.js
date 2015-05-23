@@ -1,6 +1,8 @@
+var bluebird      = require('bluebird');
 var createRobot   = require('./services/createRobot');
-var saveRobot     = require('./services/saveRobot');
 var getRobot      = require('./services/getRobot');
+var saveRobot     = require('./services/saveRobot');
+var getRobotCode  = require('./services/getRobotCode');
 var saveRobotCode = require('./services/saveRobotCode');
 
 module.exports = function(config) {
@@ -22,10 +24,14 @@ module.exports = function(config) {
 
     // get the stored robot for the user
     // and send it
-    getRobot(dbConfig, userId)
-      .then(function(robot) {
+    var gr = getRobot(dbConfig, userId);
+    var gc = getRobotCode(dbConfig, userId);
+
+    bluebird.join(gr, gc).then(function(results) {
         console.log(robot);
-        socket.emit('server:robot:retrieved', robot);
+        var robot = results[0];
+        var code = results[1];
+        socket.emit('server:robot:retrieved', robot, code);
       });
 
     // Handle events from the user
@@ -38,14 +44,14 @@ module.exports = function(config) {
 
     // User has updated and hit save on the code editor
     socket.on('user:code:updated', function(data) {
-      console.log(data.code, socket.id);
-      console.log("verify")
-      var code = data.code;
-      var errors = verifyCode(data.code);
-      // if errors empty 
-        // save code
-      // 
-      saveRobotCode(dbConfig, userId, code);
+      var source = data.source;
+      var errors = verifyCode(source);
+      // if (errors.length) {
+      //   // send message to user
+      // } else {
+      //   // save code
+      // }
+      saveRobotCode(dbConfig, userId, source);
     });
 
     socket.on('disconnect', function() {
