@@ -1,6 +1,5 @@
 var bluebird              = require('bluebird');
-var getAllActiveRobots    = require('../services/getAllActiveRobots');
-var makeGameState         = require('../services/makeGameState');
+var getGameState          = require('../services/getGameState');
 var getRobotResponse      = require('../services/getRobotResponse');
 var calcGameStateChanges  = require('../services/calcGameStateChanges');
 var saveRobots            = require('../services/saveRobots');
@@ -17,19 +16,15 @@ module.exports = function(args) {
   // save changes to robots
   // return the changed state
 
-  return getAllActiveRobots(args)
-    .then(makeGameStateWithRobots)
-    .then(makeGameStateWithResponses)
+  return getGameState(args)
+    .then(getRobotResponses)
     .then(calcGameStateChanges)
     .then(saveNewGameState);
 
-  function makeGameStateWithRobots(robots) {
-    return makeGameState({robots: robots});
-  }
-
-  function makeGameStateWithResponses(currentGameState) {
+  function getRobotResponses(currentGameState) {
     var robots = currentGameState.robots;
-    // get responses from all robots
+
+    // get responses from all robots based on the current game state
     return bluebird.Promise.map(robots, function(robot) {
       var robotArgs = {
         dbConfig:    args.dbConfig,
