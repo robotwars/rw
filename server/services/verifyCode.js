@@ -1,9 +1,9 @@
 var runCode = require('./runCode');
 var verifyCodeReturnValue = require('./verifyCodeReturnValue');
 
-module.exports = function(source) {
-
-  console.log('verifyCode')
+module.exports = function(args) {
+  var source    = args.source;
+  if (!source)    throw new Error('source is expected');
 
   var runArgs = {
     gameState:  {},

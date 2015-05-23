@@ -1,6 +1,7 @@
-import React      from 'react';
-import Codemirror from 'react-code-mirror';
-import Messages   from './Editor/Messages.jsx';
+import React            from 'react';
+import Codemirror       from 'react-code-mirror';
+import Messages         from './Editor/Messages.jsx';
+import getTemplateCode  from './services/getTemplateCode';
 require('codemirror/mode/javascript/javascript');
 
 import '../node_modules/codemirror/lib/codemirror.css';
@@ -13,16 +14,25 @@ class Editor extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      code: this.props.code
-    }
+    let code = this.props.code;
+    code = this.addTemplateCode(code);
 
+    this.state = {
+      code: code
+    }
   }
 
   componentWillReceiveProps(nextProps) {
+    let code = nextProps.code;
+    code = this.addTemplateCode(code);
     this.setState({
-      code: nextProps.code
+      code: code
     });
+  }
+
+  addTemplateCode(code) {
+    code.source = code.source || getTemplateCode();
+    return code;
   }
 
   onChange(event) {
@@ -39,6 +49,7 @@ class Editor extends React.Component {
 
   onSave(event) {
     const socket = this.props.socket;
+
     socket.emit('user:code:updated', {
       source: this.state.code.source
     });
@@ -46,7 +57,7 @@ class Editor extends React.Component {
 
   render() {
     const code    = this.state.code;
-    const source  = code.source || '// Your code here';
+    const source  = code.source;
 
     return (
       <section>
