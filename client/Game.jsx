@@ -18,8 +18,8 @@ class Game extends React.Component {
 
   getTextStyle() {
     return {
-      top: 10,
-      left: 50,
+      top: 75,
+      left: 80,
       width: window.innerWidth,
       height: 20,
       lineHeight: 20,
@@ -44,9 +44,9 @@ class Game extends React.Component {
       <div>
         Game
       <Surface width={surfaceWidth} height={surfaceHeight} left={0} top={0}>
-      <Text style={textStyle}>test</Text>
-      <Image style={imageStyle} src="imgs/robot1.png" />
       <Image style={imageStyle} src="imgs/robot2.png" />
+      <Image style={imageStyle} src="imgs/robot1.png" />
+      <Text style={textStyle}>test</Text>
       </Surface>
       </div>
     );
