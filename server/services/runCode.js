@@ -1,4 +1,4 @@
-var Sandbox            = require('sandbox');
+var vm2                = require('vm2');
 var makeInputsForRobot = require('./makeInputsForRobot');
 var bluebird           = require('bluebird');
 
@@ -13,16 +13,11 @@ module.exports = function(gameState, robot, source) {
     inputs = JSON.stringify(inputs);
     var wrapped = '(' + source + ')(' + inputs + ')';
     console.log(wrapped.toString())
-    var sandbox = new Sandbox();
+    var sb = new vm2.VM({timeout: 200});
 
-    sandbox.run(wrapped, function(output) {
-      console.log('Result: ' + output.result + '\n');
-      if (output.result.indexOf('Error:') > -1) {
-        reject(output.result);
-      } else {
-        resolve(output.result);
-      }
-    });
+    var result = sb.run(wrapped);
+    console.log(result);
+    resolve(result);
   });
 
 }
