@@ -48,8 +48,6 @@ module.exports = function(config) {
     socket.on('user:code:updated', function(data) {
       var source = data.source;
 
-      socket.emit('server:message', 'foo');
-
       verifyCode(source)
         .then(function() {
           return saveRobotCode(dbConfig, userId, source);
@@ -68,7 +66,7 @@ module.exports = function(config) {
             value: err.toString()
           }
           socket.emit('server:message', message);
-          console.log(err);
+          // console.log(err);
         });
 
       // saveRobotCode(dbConfig, userId, source)
