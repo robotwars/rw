@@ -15,7 +15,8 @@ class Game extends React.Component {
 
     props.socket.on('server:loop', (state) => {
       console.log(state.robots[0]);
-      this.setState({robot: state.robots[0]})
+      // this.setState({robot: state.robots[0]})
+      this.setState({x: state.robots[0]['x']})
     });
   }
 
@@ -46,7 +47,8 @@ class Game extends React.Component {
       console.log("test:", robot);
       return {
         top: robot['y'],
-        left: robot['x'],
+        // left: robot['x'],
+        left: this.state.x,
         width: 40,
         height: 40
       };
@@ -58,6 +60,8 @@ class Game extends React.Component {
     const imageStyle = this.getImageStyle();
     const textStyle = this.getTextStyle();
     const game = this.state.game;
+    const robot = this.state.x;
+    console.log("ROBOT", robot)
 
     return (
       <div>

@@ -22,13 +22,13 @@ module.exports = function(args) {
     var y = robot.y || 0;
 
     if(robot.x < 600){
-      robot.x = x + 1;
+      robot.x = x + 40;
     }else{
       robot.x = 0;
     }
 
     if(robot.y < 600) {
-      robot.y = y + 1;
+      robot.y = y + 40;
     }else{
       robot.y = 0;
     }
