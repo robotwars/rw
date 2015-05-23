@@ -1,7 +1,16 @@
-var chai     = require('chai');
-var expect   = chai.expect;
+var _        = require('lodash');
 var runCode  = require('./runCode');
 var bluebird = require('bluebird');
+var Joi      = require('joi');
+
+// var valid
+//
+var schema = Joi.object().keys({
+  bearTo: Joi.any().valid(undefined, 0, 90, 180, 270),
+  move:   Joi.any().valid(undefined, -1, 0, 1),
+  aimTo:  Joi.any().valid(undefined, 0, 90, 180, 270),
+  useWeapon: Joi.any().valid('flame', 'flipper', 'saw', 'laser')
+});
 
 module.exports = function(result) {
 
@@ -17,27 +26,15 @@ module.exports = function(result) {
   // }
 
   return new bluebird.Promise(function(resolve, reject) {
-    try {
-      expect(result).to.be.an('object');
+    return Joi.validate(result, schema, function(err, value) {
+      // console.log(err)
+      // console.log(value)
+      if (err) {
+        reject(err);
+      }else {
+        resolve();
+      }
+    });
 
-      // Check bearTo
-      expect([undefined, 0, 90, 180, 270]).to.include(result.bearTo);
-
-      // Check move
-      expect([undefined, -1, 0, 1]).to.include(result.move);
-
-      // Check aimTo
-      expect([undefined, 0, 90, 180, 270]).to.include(result.aimTo);
-
-      // Check weapons
-      expect([undefined, 'flame thrower', 'flipper', 'saw', 'laser']).to.include(result.useWeapon);
-
-      // Good user lets continue
-      resolve('Good');
-    } catch (e) {
-      console.log('Bad user!');
-      // console.log(e);
-      reject(e);
-    }
   });
 }
