@@ -20,12 +20,17 @@ module.exports = function(config) {
     // console.log('sessionId', userId);
 
     // Create the robot if necessary
-    createRobot(dbConfig, userId);
+    var args = {
+      dbConfig: dbConfig,
+      robotId: userId
+    };
+
+    createRobot(args);
 
     // get the stored robot for the user
     // and send it
-    var gr = getRobot(dbConfig, userId);
-    var gc = getRobotCode(dbConfig, userId);
+    var gr = getRobot(args);
+    var gc = getRobotCode(args);
 
     bluebird.join(gr, gc).then(function(results) {
         var robot = results[0];
@@ -38,7 +43,12 @@ module.exports = function(config) {
     // When user updated information about their robot
     socket.on('user:robot:updated', function(data) {
       // console.log(data.info, socket.id);
-      saveRobot(dbConfig, userId, data.robot)
+      var saveArgs = {
+        dbConfig: dbConfig,
+        robotId:  userId,
+        robot:    data.robot
+      }
+      saveRobot(saveArgs)
         .then(function() {
           console.log('Robot Saved')
         });
@@ -51,7 +61,13 @@ module.exports = function(config) {
       verifyCode(source)
         .then(function() {
           // If the code is good, then save it in the db
-          return saveRobotCode(dbConfig, userId, source);
+          var saveArgs = {
+            dbConfig: dbConfig,
+            robotId: userId,
+            source: source
+          }
+          console.log('Saving code');
+          return saveRobotCode(saveArgs);
         })
         .then(function() {
           // Return a success message to the user
@@ -69,13 +85,7 @@ module.exports = function(config) {
             value: err.toString()
           }
           socket.emit('server:message', message);
-          // console.log(err);
         });
-
-      // saveRobotCode(dbConfig, userId, source)
-      //   .then(function() {
-      //     socket.emit('server:code:saved');
-      //   });
     });
 
     socket.on('disconnect', function() {

@@ -1,0 +1,59 @@
+var bluebird              = require('bluebird');
+var getAllActiveRobots    = require('../services/getAllActiveRobots');
+var makeGameState         = require('../services/makeGameState');
+var getRobotResponse      = require('../services/getRobotResponse');
+var calcGameStateChanges  = require('../services/calcGameStateChanges');
+var saveRobots            = require('../services/saveRobots');
+
+// take the current game state
+// calc the new game state
+module.exports = function(args) {
+  if (!args.dbConfig) throw new Error('dbConfig is required');
+
+  // Get all active robos
+  // then build the state of the game with them
+  // then get responses from the robots
+  // calculate game changes based on robots responses
+  // save changes to robots
+  // return the changed state
+
+  return getAllActiveRobots(args)
+  
+    .then(function(robots) {
+      return makeGameState({robots: robots})
+    })
+
+    .then(function(gameState) {
+      var robots = gameState.robots;
+      // get responses from all robots
+      return bluebird.Promise.map(robots, function(robot) {
+        var robotArgs = {
+          dbConfig:    args.dbConfig,
+          gameState:   gameState,
+          robot:       robot
+        };
+        // get the desired state for the robot
+        return getRobotResponse(robotArgs);
+      })
+      .then(function(responses) {
+        return {
+          prevGameState: gameState,
+          responses:     responses
+        };
+      });
+    })
+
+    .then(calcGameStateChanges)
+
+    .then(function(gameState) {
+      console.log(gameState)
+      var saveArgs = {
+        dbConfig: args.dbConfig,
+        robots:   gameState.robots
+      }
+      return saveRobots(saveArgs).then(function(dbResponse) {
+        return gameState
+      });
+    });
+
+}

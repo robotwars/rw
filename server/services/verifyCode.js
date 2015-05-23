@@ -5,9 +5,12 @@ module.exports = function(source) {
 
   console.log('verifyCode')
 
-  var gameState = {}
-  var robot = {}
+  var runArgs = {
+    gameState:  {},
+    robot:      {},
+    source:     source
+  }
 
-  return runCode(gameState, robot, source)
+  return runCode(runArgs)
     .then(verifyCodeReturnValue);
 }

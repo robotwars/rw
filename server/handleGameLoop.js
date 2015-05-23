@@ -1,5 +1,7 @@
-var gameloop = require('node-gameloop');
-var timesPerSec = 5;
+var gameloop    = require('node-gameloop');
+var runLoop     = require('./services/runLoop');
+var timesPerSec = 4;
+var busy        = false;
 
 module.exports = function(config) {
   var io = config.io;
@@ -7,10 +9,21 @@ module.exports = function(config) {
   // game loop
   // start the loop at 5 fps (1000/30ms per frame) and grab its id
   var frameCount = 0;
+
   var id = gameloop.setGameLoop(function(delta) {
-    // `delta` is the delta time from the last frame
-    frameCount++;
-    // console.log('Hi there! (frame=%s, delta=%s)', frameCount++, delta);
-    io.sockets.emit('server:loop', {state: frameCount})
+    if (busy) return;
+    busy = true;
+    var args = {
+      dbConfig:  config.dbConfig
+    }
+
+    runLoop(args)
+      .then(function(gameState) {
+        console.log(gameState)
+        busy = false;
+      })
+
+    //io.sockets.emit('server:loop', gameState);
   }, 1000 / timesPerSec);
 }
+
