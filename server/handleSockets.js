@@ -4,9 +4,10 @@ var getRobot     = require('./services/getRobot');
 
 module.exports = function(config) {
   var io             = config.io;
+  var verifyCode  = require('./services/verifyCode.js');
   var dbConfig       = config.dbConfig;
 
-  // user connected
+  // user connected 
   io.on('connection', function(socket) {
 
     var sockerId = socket.id;
@@ -34,8 +35,14 @@ module.exports = function(config) {
       saveRobot(dbConfig, userId, data.robot);
     })
 
+    // User has updated and hit save on the code editor
     socket.on('user:code:updated', function(data) {
       console.log(data.code, socket.id);
+      console.log("verify")
+      var errors = verifyCode(data.code);
+      // if errors empty 
+        // save code
+      // 
     })
 
     socket.on('disconnect', function() {
