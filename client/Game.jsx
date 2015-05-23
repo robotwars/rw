@@ -1,6 +1,6 @@
 import React       from 'react';
 import ReactCanvas from 'react-canvas';
-const  PT      =    React.PropTypes;
+const PT      =    React.PropTypes;
 const Surface = ReactCanvas.Surface;
 const Image = ReactCanvas.Image;
 const Text = ReactCanvas.Text;
@@ -11,7 +11,7 @@ class Game extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {game: [{name: "Sonny", x: 30, y: 80}, {name: "Terminator", x: 90, y: 200}]}
+    this.state = {game: [{name: "Sonny", x: 50, y: 80}, {name: "Terminator", x: 90, y: 200}]}
     props.socket.on('server:loop', (state) => {
       // console.log(state);
       
@@ -60,7 +60,6 @@ class Game extends React.Component {
 
     return (
       <div>
-      Game
       <Surface width={surfaceWidth} height={surfaceHeight} left={0} top={0}>
       <Image style={this.getImageStyle(game[0])} src="imgs/robot1.png" />
       <Image style={this.getImageStyle(game[1])} src="imgs/robot2.png" />
