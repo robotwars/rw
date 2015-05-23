@@ -1,13 +1,16 @@
-var createRobot  = require('./services/createRobot');
-var saveRobot    = require('./services/saveRobot');
-var getRobot     = require('./services/getRobot');
+var bluebird      = require('bluebird');
+var createRobot   = require('./services/createRobot');
+var getRobot      = require('./services/getRobot');
+var saveRobot     = require('./services/saveRobot');
+var getRobotCode  = require('./services/getRobotCode');
+var saveRobotCode = require('./services/saveRobotCode');
 
 module.exports = function(config) {
   var io             = config.io;
   var verifyCode  = require('./services/verifyCode.js');
   var dbConfig       = config.dbConfig;
 
-  // user connected 
+  // user connected
   io.on('connection', function(socket) {
 
     var sockerId = socket.id;
@@ -21,33 +24,41 @@ module.exports = function(config) {
 
     // get the stored robot for the user
     // and send it
-    getRobot(dbConfig, userId)
-      .then(function(robot) {
-        console.log(robot);
-        socket.emit('server:robot:retrieved', robot);
-      });
+    var gr = getRobot(dbConfig, userId);
+    var gc = getRobotCode(dbConfig, userId);
 
-    // Send a session token to the user
-    // create a robot for this user
-    // socket.emit('news', { hello: 'world' });
+    bluebird.join(gr, gc).then(function(results) {
+        console.log(robot);
+        var robot = results[0];
+        var code = results[1];
+        socket.emit('server:robot:retrieved', robot, code);
+      });
 
     // Handle events from the user
 
     // When user updated information about their robot
     socket.on('user:robot:updated', function(data) {
       // console.log(data.info, socket.id);
-      saveRobot(dbConfig, userId, data.robot);
+      saveRobot(dbConfig, userId, data.robot)
+        .then(function() {
+          console.log('Robot Saved')
+        });
     })
 
     // User has updated and hit save on the code editor
     socket.on('user:code:updated', function(data) {
-      console.log(data.code, socket.id);
-      console.log("verify")
-      var errors = verifyCode(data.code);
-      // if errors empty 
-        // save code
-      // 
-    })
+      var source = data.source;
+      var errors = verifyCode(source);
+      // if (errors.length) {
+      //   // send message to user
+      // } else {
+      //   // save code
+      // }
+      saveRobotCode(dbConfig, userId, source)
+        .then(function() {
+          socket.emit('server:code:saved');
+        });
+    });
 
     socket.on('disconnect', function() {
       console.log('user disconnected');

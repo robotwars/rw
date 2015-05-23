@@ -20,6 +20,7 @@ function createTable(dbConfig, tableName) {
 function setupDB(dbConfig) {
   return createDb(dbConfig)
     .then(createTable(dbConfig, 'robots'))
+    .then(createTable(dbConfig, 'codes'))
     .then(createTable(dbConfig, 'sessions'))
     .error(function(e) {
       // console.error('error', e);
