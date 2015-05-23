@@ -1,7 +1,7 @@
 var _        = require('lodash');
 var runCode  = require('./runCode');
-var bluebird = require('bluebird');
-var Joi      = require('joi');
+var bluebird = require('bluebird'); // Promise framework
+var Joi      = require('joi');      // For evaluations, simplier than chai
 
 // var valid
 
@@ -13,6 +13,7 @@ var Joi      = require('joi');
 //   useWeapon: 'saw'
 // }
 
+// validate the input from the user
 var schema = Joi.object().keys({
   bearTo:        Joi.any().valid(undefined, 0, 90, 180, 270),
   move:          Joi.any().valid(undefined, -1, 0, 1),
@@ -22,7 +23,6 @@ var schema = Joi.object().keys({
 
 module.exports = function(result) {
 
-  // try and chai plugin
   console.log('verifyCodeReturnValue', result);
   console.log(_.isString(result))
 
