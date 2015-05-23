@@ -1,13 +1,14 @@
-var createRobot  = require('./services/createRobot');
-var saveRobot    = require('./services/saveRobot');
-var getRobot     = require('./services/getRobot');
+var createRobot   = require('./services/createRobot');
+var saveRobot     = require('./services/saveRobot');
+var getRobot      = require('./services/getRobot');
+var saveRobotCode = require('./services/saveRobotCode');
 
 module.exports = function(config) {
   var io             = config.io;
   var verifyCode  = require('./services/verifyCode.js');
   var dbConfig       = config.dbConfig;
 
-  // user connected 
+  // user connected
   io.on('connection', function(socket) {
 
     var sockerId = socket.id;
@@ -39,11 +40,13 @@ module.exports = function(config) {
     socket.on('user:code:updated', function(data) {
       console.log(data.code, socket.id);
       console.log("verify")
+      var code = data.code;
       var errors = verifyCode(data.code);
       // if errors empty 
         // save code
       // 
-    })
+      saveRobotCode(dbConfig, userId, code);
+    });
 
     socket.on('disconnect', function() {
       console.log('user disconnected');
