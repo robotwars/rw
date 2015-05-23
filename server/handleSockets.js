@@ -39,7 +39,10 @@ module.exports = function(config) {
     // When user updated information about their robot
     socket.on('user:robot:updated', function(data) {
       // console.log(data.info, socket.id);
-      saveRobot(dbConfig, userId, data.robot);
+      saveRobot(dbConfig, userId, data.robot)
+        .then(function() {
+          console.log('Robot Saved')
+        });
     })
 
     // User has updated and hit save on the code editor
@@ -51,7 +54,10 @@ module.exports = function(config) {
       // } else {
       //   // save code
       // }
-      saveRobotCode(dbConfig, userId, source);
+      saveRobotCode(dbConfig, userId, source)
+        .then(function() {
+          socket.emit('server:code:saved');
+        });
     });
 
     socket.on('disconnect', function() {
