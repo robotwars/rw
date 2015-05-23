@@ -1,6 +1,7 @@
 var gameloop = require('node-gameloop');
 
-module.exports = function(io) {
+module.exports = function(config) {
+  var io = config.io;
 
   // game loop
   // start the loop at 5 fps (1000/30ms per frame) and grab its id
