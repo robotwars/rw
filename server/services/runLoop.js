@@ -23,21 +23,27 @@ module.exports = function(args) {
       return makeGameState({robots: robots})
     })
 
-    .then(function(gameState) {
-      var robots = gameState.robots;
+    .then(function(currentGameState) {
+      var robots = currentGameState.robots;
       // get responses from all robots
       return bluebird.Promise.map(robots, function(robot) {
         var robotArgs = {
           dbConfig:    args.dbConfig,
-          gameState:   gameState,
+          gameState:   currentGameState,
           robot:       robot
         };
         // get the desired state for the robot
         return getRobotResponse(robotArgs);
       })
+
       .then(function(responses) {
+        // console.log(responses)
+        // [
+        //   { bearTo: 0, robotId: '0Y9ziumR1EANP8hs7mH4RDjRtMieBr1V' },
+        //   { robotId: '64UkgYwnNEdQcJDjluQ8qwi6qLVDY0PM' }
+        // ]
         return {
-          prevGameState: gameState,
+          prevGameState: currentGameState,
           responses:     responses
         };
       });
@@ -46,14 +52,18 @@ module.exports = function(args) {
     .then(calcGameStateChanges){
       // Handle colision detection & weapons
     }
-    .then(function(gameState) {
-      console.log(gameState)
+    .then(calcGameStateChanges)
+
+    .then(function(newGameState) {
+      console.log(newGameState)
+
       var saveArgs = {
         dbConfig: args.dbConfig,
-        robots:   gameState.robots
+        robots:   newGameState.robots
       }
+      // save the robots in the new state
       return saveRobots(saveArgs).then(function(dbResponse) {
-        return gameState
+        return newGameState
       });
     });
 
