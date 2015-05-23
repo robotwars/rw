@@ -1,5 +1,6 @@
 var createRobot  = require('./services/createRobot');
-var saveUserInfo = require('./services/saveUserInfo');
+var saveRobot    = require('./services/saveRobot');
+var getRobot     = require('./services/getRobot');
 
 module.exports = function(config) {
   var io             = config.io;
@@ -14,16 +15,26 @@ module.exports = function(config) {
     // console.log('user connected, sockerId', sockerId);
     // console.log('sessionId', userId);
 
-    // Create the robot
+    // Create the robot if necessary
     createRobot(dbConfig, userId);
+
+    // get the stored robot for the user
+    // and send it
+    getRobot(dbConfig, userId)
+      .then(function(robot) {
+        console.log(robot);
+        socket.emit('server:robot:retrieved', robot);
+      });
 
     // Send a session token to the user
     // create a robot for this user
     // socket.emit('news', { hello: 'world' });
 
+    // Handle events from the user
+
     socket.on('user:info:updated', function(data) {
       // console.log(data.info, socket.id);
-      saveUserInfo(dbConfig, userId, data.info);
+      saveRobot(dbConfig, userId, data.info);
     })
 
     socket.on('user:code:updated', function(data) {

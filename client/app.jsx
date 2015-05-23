@@ -7,9 +7,11 @@ import '../node_modules/basscss/css/basscss.css';
 // Connect to SocketIO on the same host
 var socket = io.connect();
 
-socket.on('refresh', function(state) {
-  // console.log('state received', state);
+socket.on('server:robot:retrieved', function(robot) {
+  console.log('robot received', robot);
 });
+
+
 
 React.render(
   <Main socket={socket} />,
