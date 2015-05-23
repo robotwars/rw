@@ -25,3 +25,24 @@ Start database in the project directory. We use rethinkdb.
 ```
 rethinkdb
 ```
+
+
+Example of your robot code
+```
+function(){
+    // Function which determines your actions
+
+    // Return result
+ 	return {bearTo: 270}; 
+}
+```
+
+The JSON which we are ending up with in the return will be;
+```
+{
+  bearTo: 270,
+  move: 1,
+  aimTo: 90,
+  useWeapon: "flame thrower"
+}
+```
