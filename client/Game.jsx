@@ -14,15 +14,18 @@ class Game extends React.Component {
     this.state = {game: [{name: "Sonny", x: 30, y: 80}, {name: "Terminator", x: 90, y: 200}]}
     props.socket.on('server:loop', (state) => {
       // console.log(state);
+      
     });
   }
 
+  // Get the robot name
   getRobotName(robot){
     if (robot != undefined){
       return robot['name']
     }
   }
 
+  // Position the robot name under the robot
   getTextStyle(robot) {
     if (robot != undefined){
       return {
@@ -36,6 +39,7 @@ class Game extends React.Component {
     }
   }
 
+  // Position the robot
   getImageStyle(robot) {
     if (robot != undefined){
       console.log("test:", robot);
@@ -48,6 +52,7 @@ class Game extends React.Component {
     }
   } 
   
+  // The rendering...
   render() {
     const imageStyle = this.getImageStyle();
     const textStyle = this.getTextStyle();
@@ -55,7 +60,7 @@ class Game extends React.Component {
 
     return (
       <div>
-        Game
+      Game
       <Surface width={surfaceWidth} height={surfaceHeight} left={0} top={0}>
       <Image style={this.getImageStyle(game[0])} src="imgs/robot1.png" />
       <Image style={this.getImageStyle(game[1])} src="imgs/robot2.png" />
