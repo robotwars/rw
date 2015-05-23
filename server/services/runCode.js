@@ -8,7 +8,9 @@ module.exports = function(source, gameState, cb) {
     var wrapped = '(' + source + ')(' + inputs + ')';
     var sandbox = new Sandbox();
 
+    // Run the code in a sandbox.
     sandbox.run(wrapped, function(output) {
+      
       // console.log('Result: ' + output.result + '\n');
       if (output.result.indexOf('Error:') > -1) {
         reject(output.result);

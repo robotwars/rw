@@ -1,7 +1,7 @@
 var chai     = require('chai');
 var expect   = chai.expect;
 var runCode  = require('./runCode');
-var bluebird = require('bluebird');
+var bluebird = require('bluebird'); // promise library
 
 module.exports = function(result) {
 
@@ -15,8 +15,8 @@ module.exports = function(result) {
   //   aimTo: 90,
   //   useWeapon: 'saw'
   // }
-  console.log('ddkdk')
-  // console.log(bluebird)
+    
+  
   return new bluebird.Promise(function(resolve, reject) {
     try {
       expect(result).to.be.an('object');

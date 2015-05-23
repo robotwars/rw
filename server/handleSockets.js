@@ -50,11 +50,14 @@ module.exports = function(config) {
 
       socket.emit('server:message', 'foo');
 
+      
       verifyCode(source)
         .then(function() {
+          // If the code is good, then save it in the db
           return saveRobotCode(dbConfig, userId, source);
         })
         .then(function() {
+          // Return a success message to the user
           console.log('Code is good, saving');
           var message = {
             kind:  'success',
@@ -63,6 +66,7 @@ module.exports = function(config) {
           socket.emit('server:message', message);
         })
         .catch(function(err) {
+          // Return a error message to the user
           var message = {
             kind: 'error',
             value: err.toString()
@@ -81,5 +85,4 @@ module.exports = function(config) {
       console.log('user disconnected');
     });
   });
-
 }
