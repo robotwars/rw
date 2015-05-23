@@ -2,7 +2,22 @@ import React      from 'react';
 import _          from 'lodash';
 const PT          = React.PropTypes;
 
-class Editor extends React.Component {
+class Messsages extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      message: {}
+    }
+
+    props.socket.on('server:message', (message) => {
+      console.log('server:message', message);
+      this.setState({
+        message: message
+      });
+    });
+  }
 
   componentWillReceiveProps(nextProps) {
     // animation
@@ -19,15 +34,15 @@ class Editor extends React.Component {
       error:   'bg-red',
       success: 'bg-green'
     }
-    return classes[this.props.message.kind]
+    return classes[this.state.message.kind]
   }
 
   render() {
-    const kindClass  = this.getKindClass();
-    const message    = this.props.message;
-    const classes = 'bold center p2 mb2 white rounded ' + kindClass;
+    const message    = this.state.message;
 
     if (message) {
+      const kindClass  = this.getKindClass();
+      const classes    = 'bold center p2 mb2 white rounded ' + kindClass;
       return (
         <div className={classes}>
           {message.value}
@@ -40,8 +55,8 @@ class Editor extends React.Component {
 
 }
 
-Editor.propTypes = {
-  message: PT.object
+Messsages.propTypes = {
+  socket: PT.object.isRequired
 }
 
-export default Editor;
+export default Messsages;

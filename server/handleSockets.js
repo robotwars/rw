@@ -48,20 +48,26 @@ module.exports = function(config) {
     socket.on('user:code:updated', function(data) {
       var source = data.source;
 
+      socket.emit('server:message', 'foo');
+
       verifyCode(source)
         .then(function() {
           return saveRobotCode(dbConfig, userId, source);
         })
         .then(function() {
           console.log('Code is good, saving');
-          socket.emit('server:code:saved');
+          var message = {
+            kind:  'success',
+            value: 'Saved'
+          }
+          socket.emit('server:message', message);
         })
         .catch(function(err) {
           var message = {
             kind: 'error',
             value: err.toString()
           }
-          socket.emit('server:code:error', message);
+          socket.emit('server:message', message);
           console.log(err);
         });
 

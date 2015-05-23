@@ -1,6 +1,6 @@
 import React      from 'react';
 import Codemirror from 'react-code-mirror';
-import Message    from './Editor/Message.jsx';
+import Messages   from './Editor/Messages.jsx';
 require('codemirror/mode/javascript/javascript');
 
 import '../node_modules/codemirror/lib/codemirror.css';
@@ -14,22 +14,9 @@ class Editor extends React.Component {
     super(props);
 
     this.state = {
-      code: this.props.code,
-      message: {}
+      code: this.props.code
     }
 
-    props.socket.on('server:code:saved', () => {
-      this.setState({
-        message: ['Saved']
-      });
-    });
-
-    props.socket.on('server:code:error', (message) => {
-      console.log('server:code:error', message)
-      this.setState({
-        message: message
-      });
-    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -77,7 +64,7 @@ class Editor extends React.Component {
           <button onClick={this.onSave.bind(this)}>Send</button>
         </div>
         <div className='mt1'>
-          <Message message={this.state.message} />
+          <Messages socket={this.props.socket} />
         </div>
       </section>
     );
@@ -86,7 +73,7 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
-  socket: PT.any.isRequired,
+  socket: PT.object.isRequired,
   code:   PT.object.isRequired
 }
 

@@ -6,8 +6,7 @@ var bluebird = require('bluebird');
 module.exports = function(result) {
 
   // try and chai plugin
-  console.log('verifyCodeReturnValue')
-  console.log(result);
+  console.log('verifyCodeReturnValue', result);
 
   // Get result from a sandboxed environment
   // var result = {
@@ -16,9 +15,12 @@ module.exports = function(result) {
   //   aimTo: 90,
   //   useWeapon: 'saw'
   // }
-  return new Promise(function(resolve, reject) {
+  console.log('ddkdk')
+  // console.log(bluebird)
+  return new bluebird.Promise(function(resolve, reject) {
     try {
-      expect(result).to.be.typeOf('object');
+      expect(result).to.be.an('object');
+      console.log('object ok');
 
       // Check bearTo
       expect([undefined, 0, 90, 180, 270]).to.include(result.bearTo);
