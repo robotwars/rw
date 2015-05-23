@@ -13,7 +13,7 @@ class Main extends React.Component {
       code:  {}
     }
     props.socket.on('server:robot:retrieved', (robot, code) => {
-      console.log('robot received', robot, code);
+      // console.log('robot received', robot, code);
 
       code = code || {};
 
@@ -25,6 +25,7 @@ class Main extends React.Component {
   }
 
   render() {
+    const socket = this.props.socket;
     const robot = this.state.robot;
     const code  = this.state.code;
 
@@ -32,16 +33,17 @@ class Main extends React.Component {
       <div className="container">
         <h1>RW</h1>
         <div className="col col-8">
-          <Game />
+          <Game
+            socket={socket} />
         </div>
         <div className="col col-4">
           <Properties
             robot={robot}
-            socket={this.props.socket} />
+            socket={socket} />
           <Editor
             robot={robot}
             code={code}
-            socket={this.props.socket} />
+            socket={socket} />
         </div>
       </div>
     );
@@ -50,7 +52,7 @@ class Main extends React.Component {
 }
 
 Main.propTypes = {
-  socket: PT.any.isRequired
+  socket: PT.object.isRequired
 }
 
 export default Main;
