@@ -1,7 +1,15 @@
 import React       from 'react';
 import ReactCanvas from 'react-canvas';
+const  PT      =    React.PropTypes;
 
 class Game extends React.Component {
+
+  constructor(props) {
+    super(props);
+    props.socket.on('server:loop', (state) => {
+      // console.log(state);
+    });
+  }
 
   render() {
     const surfaceWidth = window.innerWidth;
@@ -18,6 +26,10 @@ class Game extends React.Component {
     );
   }
 
+}
+
+Game.propTypes = {
+  socket: PT.object.isRequired
 }
 
 export default Game;

@@ -1,4 +1,5 @@
 var gameloop = require('node-gameloop');
+var timesPerSec = 5;
 
 module.exports = function(config) {
   var io = config.io;
@@ -10,6 +11,6 @@ module.exports = function(config) {
     // `delta` is the delta time from the last frame
     frameCount++;
     // console.log('Hi there! (frame=%s, delta=%s)', frameCount++, delta);
-    io.sockets.emit('refresh', {state: frameCount})
-  }, 1000 / 5);
+    io.sockets.emit('server:loop', {state: frameCount})
+  }, 1000 / timesPerSec);
 }
