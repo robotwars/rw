@@ -6,7 +6,22 @@ const  PT         =    React.PropTypes;
 
 class Main extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      robot: {}
+    }
+    props.socket.on('server:robot:retrieved', (robot) => {
+      console.log('robot received', robot);
+      this.setState({
+        robot: robot
+      });
+    });
+  }
+
   render() {
+    const robot = this.state.robot;
+
     return (
       <div className="container">
         <h1>RW</h1>
@@ -14,8 +29,8 @@ class Main extends React.Component {
           <Game />
         </div>
         <div className="col col-4">
-          <Properties socket={this.props.socket} />
-          <Editor socket={this.props.socket} />
+          <Properties robot={robot} socket={this.props.socket} />
+          <Editor     robot={robot} socket={this.props.socket} />
         </div>
       </div>
     );

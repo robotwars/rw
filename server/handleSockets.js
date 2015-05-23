@@ -32,9 +32,10 @@ module.exports = function(config) {
 
     // Handle events from the user
 
-    socket.on('user:info:updated', function(data) {
+    // When user updated information about their robot
+    socket.on('user:robot:updated', function(data) {
       // console.log(data.info, socket.id);
-      saveRobot(dbConfig, userId, data.info);
+      saveRobot(dbConfig, userId, data.robot);
     })
 
     socket.on('user:code:updated', function(data) {
