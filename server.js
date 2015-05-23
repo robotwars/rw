@@ -1,20 +1,23 @@
 var Express        = require('express');
 
 // Cookie parser middleware
-var CookieParser   = require('cookie-parser');
-var cookieParser   = CookieParser();
+var CookieParser             = require('cookie-parser');
+var cookieParserMiddleware   = CookieParser();
 
 // Session middleware for Express
 // https://github.com/expressjs/session
 var ExpressSession = require('express-session');
 var RDBStore       = require('express-session-rethinkdb')(ExpressSession);
 
+// Our dependecies
 var handleSockets  = require('./server/handleSockets.js');
 var handleGameLoop = require('./server/handleGameLoop.js');
 var setupDB        = require('./server/services/setupDB');
 
+// Key used for hashing sessions
 var sessionsSecretKey = 'my5uperSEC537(key)!';
 
+// Configuration for RethinkDB
 var dbConfig = {
   db:     'rw',
   host:   'localhost',
@@ -24,6 +27,8 @@ var dbConfig = {
 // init DB, create tables ...
 setupDB(dbConfig);
 
+// We want to store the sessions in RethinkDB
+// so set the session store
 var sessionsStore = new RDBStore({
   connectOptions:  dbConfig,
   table:           'sessions',
@@ -31,7 +36,8 @@ var sessionsStore = new RDBStore({
   flushInterval:   60000
 });
 
-var expressSession = ExpressSession({
+// Middleware that handles getting sessions from the session store
+var sessionMiddleware = ExpressSession({
   secret: sessionsSecretKey,
   store:  sessionsStore,
   resave: false,
@@ -41,19 +47,19 @@ var expressSession = ExpressSession({
 var app = Express();
 
 // serve static assets
-app.use(cookieParser)
+app.use(cookieParserMiddleware)
 app.use(Express.static('public'));
-app.use(expressSession);
+app.use(sessionMiddleware);
 
 app.get('/', function(req, res) {
-  // test saving something on the session
-  // console.log('session', req.session);
-  req.session.foo = new Date();
-  req.session.save(function(err) {
-    res.sendFile(__dirname + '/public/app.html');
-  })
+  // req.session.foo = new Date();
+  // req.session.save(function(err) {
+  //   res.sendFile(__dirname + '/public/app.html');
+  // })
+  res.sendFile(__dirname + '/public/app.html');
 });
 
+// Create the server
 var server = app.listen(3000, function() {
   var host = server.address().address;
   var port = server.address().port;
@@ -62,10 +68,12 @@ var server = app.listen(3000, function() {
 
 var io = require('socket.io')(server);
 
+io.use(function(socket, next) {
+  sessionMiddleware(socket.request, socket.request.res, next);
+});
+
 var config = {
-  io:            io,
-  cookieParser:  cookieParser,
-  sessionsStore: sessionsStore
+  io:            io
 }
 
 handleSockets(config);
