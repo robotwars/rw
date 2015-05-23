@@ -68,6 +68,8 @@ var server = app.listen(3000, function() {
 
 var io = require('socket.io')(server);
 
+// Get Socket IO to use the sessions middleware
+// so the session is available in io callbacks
 io.use(function(socket, next) {
   sessionMiddleware(socket.request, socket.request.res, next);
 });

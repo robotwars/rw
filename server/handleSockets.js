@@ -8,9 +8,9 @@ module.exports = function(config) {
 
     var sockerId = socket.id;
 
-    console.log(socket.request.session);
+    console.log('user connected, sockerId', sockerId);
+    console.log('sessionId', socket.request.session.id);
 
-    console.log('user connected', sockerId);
 
     // Send a session token to the user
     // create a robot for this user
