@@ -80,5 +80,5 @@ var config = {
 }
 
 handleSockets(config);
-// handleGameLoop(config);
+handleGameLoop(config);
 

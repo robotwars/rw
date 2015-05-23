@@ -18,50 +18,51 @@ module.exports = function(args) {
   // return the changed state
 
   return getAllActiveRobots(args)
-  
-    .then(function(robots) {
-      return makeGameState({robots: robots})
-    })
-
-    .then(function(currentGameState) {
-      var robots = currentGameState.robots;
-      // get responses from all robots
-      return bluebird.Promise.map(robots, function(robot) {
-        var robotArgs = {
-          dbConfig:    args.dbConfig,
-          gameState:   currentGameState,
-          robot:       robot
-        };
-        // get the desired state for the robot
-        return getRobotResponse(robotArgs);
-      })
-
-      .then(function(responses) {
-        // console.log(responses)
-        // [
-        //   { bearTo: 0, robotId: '0Y9ziumR1EANP8hs7mH4RDjRtMieBr1V' },
-        //   { robotId: '64UkgYwnNEdQcJDjluQ8qwi6qLVDY0PM' }
-        // ]
-        return {
-          prevGameState: currentGameState,
-          responses:     responses
-        };
-      });
-    })
-
+    .then(makeGameStateWithRobots)
+    .then(makeGameStateWithResponses)
     .then(calcGameStateChanges)
+    .then(saveNewGameState);
 
-    .then(function(newGameState) {
-      console.log(newGameState)
+  function makeGameStateWithRobots(robots) {
+    return makeGameState({robots: robots});
+  }
 
-      var saveArgs = {
-        dbConfig: args.dbConfig,
-        robots:   newGameState.robots
-      }
-      // save the robots in the new state
-      return saveRobots(saveArgs).then(function(dbResponse) {
-        return newGameState
-      });
+  function makeGameStateWithResponses(currentGameState) {
+    var robots = currentGameState.robots;
+    // get responses from all robots
+    return bluebird.Promise.map(robots, function(robot) {
+      var robotArgs = {
+        dbConfig:    args.dbConfig,
+        gameState:   currentGameState,
+        robot:       robot
+      };
+      // get the desired state for the robot
+      return getRobotResponse(robotArgs);
+    })
+    .then(function(responses) {
+      // console.log(responses)
+      // [
+      //   { bearTo: 0, robotId: '0Y9ziumR1EANP8hs7mH4RDjRtMieBr1V' },
+      //   { robotId: '64UkgYwnNEdQcJDjluQ8qwi6qLVDY0PM' }
+      // ]
+      return {
+        prevGameState: currentGameState,
+        responses:     responses
+      };
     });
+  }
+
+  function saveNewGameState(newGameState) {
+    console.log(newGameState);
+
+    var saveArgs = {
+      dbConfig: args.dbConfig,
+      robots:   newGameState.robots
+    }
+    // save the robots in the new state
+    return saveRobots(saveArgs).then(function(dbResponse) {
+      return newGameState
+    });
+  }
 
 }
