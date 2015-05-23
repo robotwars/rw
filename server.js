@@ -75,7 +75,8 @@ io.use(function(socket, next) {
 });
 
 var config = {
-  io:            io
+  io:            io,
+  dbConfig:      dbConfig
 }
 
 handleSockets(config);

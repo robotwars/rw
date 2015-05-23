@@ -1,4 +1,5 @@
 import React      from 'react';
+// import _          from 'lodash';
 const PT          = React.PropTypes;
 
 class Editor extends React.Component {
@@ -7,19 +8,24 @@ class Editor extends React.Component {
     super(props);
 
     this.state = {
-      info: {
-        name: 'Robot name'
-      }
+      robot: props.robot
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // console.log('componentWillReceiveProps', nextProps)
+    this.setState({
+      robot: nextProps.robot
+    });
   }
 
   onChange(event) {
     const value = event.target.value;
-    const info = this.state.info;
-    info.name = value;
+    const robot = this.state.robot;
+    robot.name = value;
 
     this.setState({
-      info: info
+      robot: robot
     });
 
     this.save()
@@ -27,19 +33,24 @@ class Editor extends React.Component {
 
   save() {
     const socket = this.props.socket;
-    socket.emit('user:info:updated', {
-      info: this.state.info
+    const robot = this.state.robot;
+
+    // we don't want to send a change to the code
+    // robot = _.without(robot);
+
+    socket.emit('user:robot:updated', {
+      robot: robot
     });
   }
 
   render() {
-    const info    = this.state.info;
+    const robot    = this.state.robot;
 
     return (
       <section className='mb1'>
         <form>
           <input
-            value={info.name}
+            value={robot.name}
             onChange={this.onChange.bind(this)}
             className='field-light'
             type="text" />
@@ -51,7 +62,8 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
-  socket: PT.any.isRequired
+  socket: PT.any.isRequired,
+  robot:  PT.object.isRequired
 }
 
 export default Editor;
