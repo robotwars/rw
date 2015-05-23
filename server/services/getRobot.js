@@ -1,4 +1,4 @@
-var r = require('rethinkdbdash')();
+var r = require('rethinkdbdash')(); // Allows interacting with rethinkdb
 
 module.exports = function(dbConfig, userId) {
   return r.db(dbConfig.db)
