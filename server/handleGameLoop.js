@@ -19,11 +19,11 @@ module.exports = function(config) {
 
     runLoop(args)
       .then(function(gameState) {
-        console.log(gameState)
+        // console.log(gameState)
         busy = false;
+        io.sockets.emit('server:loop', gameState);
       })
 
-    //io.sockets.emit('server:loop', gameState);
   }, 1000 / timesPerSec);
 }
 
