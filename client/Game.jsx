@@ -11,6 +11,17 @@ class Game extends React.Component {
     });
   }
 
+  getTextStyle() {
+    return {
+      top: 10,
+      left: 50,
+      width: window.innerWidth,
+      height: 20,
+      lineHeight: 20,
+      fontSize: 12
+    };
+  }
+  
   render() {
     const surfaceWidth = window.innerWidth;
     const surfaceHeight = window.innerHeight;
@@ -20,10 +31,11 @@ class Game extends React.Component {
       <div>
         Game
       <surface width={surfaceWidth} height={surfaceHeight} left={0} top={0}>
-      <text style={textStyle}></text>
+      <text style={textStyle}>test</text>
       </surface>
       </div>
     );
+
   }
 
 }
