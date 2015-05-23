@@ -20,8 +20,18 @@ module.exports = function(args) {
   _.each(robots, function(robot) {
     var x = robot.x || 0;
     var y = robot.y || 0;
-    robot.x = x + 1;
-    robot.y = y + 1;
+
+    if(robot.x < 600){
+      robot.x = x + 1;
+    }else{
+      robot.x = 0;
+    }
+
+    if(robot.y < 600) {
+      robot.y = y + 1;
+    }else{
+      robot.y = 0;
+    }
   });
 
   gameState.robots = robots;
