@@ -18,8 +18,10 @@ module.exports = function(args) {
   const robots    = args.prevGameState.robots;
 
   _.each(robots, function(robot) {
-    robot.x = 0;
-    robot.y = 0;
+    var x = robot.x || 0;
+    var y = robot.y || 0;
+    robot.x = x + 1;
+    robot.y = y + 1;
   });
 
   gameState.robots = robots;
