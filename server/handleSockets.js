@@ -23,7 +23,7 @@ module.exports = function(config) {
 
     socket.on('user:info:updated', function(data) {
       // console.log(data.info, socket.id);
-      saveUserInfo(userId, data);
+      saveUserInfo(dbConfig, userId, data.info);
     })
 
     socket.on('user:code:updated', function(data) {
