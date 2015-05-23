@@ -44,6 +44,7 @@
     "lodash": "^3.9.1",
     "raw-loader": "^0.5.1",
     "react": "^0.13.3",
+    "react-canvas": "0.0.1",
     "react-code-mirror": "^3.0.4",
     "script-loader": "^0.5.2",
     "signals": "^1.0.0",
