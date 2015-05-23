@@ -43,8 +43,9 @@ module.exports = function(args) {
       });
     })
 
-    .then(calcGameStateChanges)
-
+    .then(calcGameStateChanges){
+      // Handle colision detection & weapons
+    }
     .then(function(gameState) {
       console.log(gameState)
       var saveArgs = {

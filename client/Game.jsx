@@ -4,8 +4,8 @@ const PT      =    React.PropTypes;
 const Surface = ReactCanvas.Surface;
 const Image = ReactCanvas.Image;
 const Text = ReactCanvas.Text;
-const surfaceWidth = window.innerWidth;
-const surfaceHeight = window.innerHeight;
+const surfaceWidth = 600;
+const surfaceHeight = 600;
 
 class Game extends React.Component {
 
