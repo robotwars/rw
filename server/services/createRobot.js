@@ -5,8 +5,9 @@ module.exports = function(dbConfig, userId) {
   // in the DB if not there
 
   var robot = {
-    id: userId,
-    name: 'Robot name'
+    id:     userId,
+    name:   'Robot',
+    active: true
   }
 
   r.db(dbConfig.db)
