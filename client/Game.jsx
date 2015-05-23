@@ -1,6 +1,11 @@
 import React       from 'react';
 import ReactCanvas from 'react-canvas';
 const  PT      =    React.PropTypes;
+const Surface = ReactCanvas.Surface;
+const Image = ReactCanvas.Image;
+const Text = ReactCanvas.Text;
+const surfaceWidth = window.innerWidth;
+const surfaceHeight = window.innerHeight;
 
 class Game extends React.Component {
 
@@ -21,18 +26,28 @@ class Game extends React.Component {
       fontSize: 12
     };
   }
+
+  getImageStyle() {
+    return {
+      top: 30,
+      left: 80,
+      width: 40,
+      height: 40
+    };
+  } 
   
   render() {
-    const surfaceWidth = window.innerWidth;
-    const surfaceHeight = window.innerHeight;
+    const imageStyle = this.getImageStyle();
     const textStyle = this.getTextStyle();
 
     return (
       <div>
         Game
-      <surface width={surfaceWidth} height={surfaceHeight} left={0} top={0}>
-      <text style={textStyle}>test</text>
-      </surface>
+      <Surface width={surfaceWidth} height={surfaceHeight} left={0} top={0}>
+      <Text style={textStyle}>test</Text>
+      <Image style={imageStyle} src="imgs/robot1.png" />
+      <Image style={imageStyle} src="imgs/robot2.png" />
+      </Surface>
       </div>
     );
 
