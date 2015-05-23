@@ -11,42 +11,56 @@ class Game extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {game: [{name: "Sonny", x: 30, y: 80}, {name: "Terminator", x: 90, y: 200}]}
     props.socket.on('server:loop', (state) => {
       // console.log(state);
     });
   }
 
-  getTextStyle() {
-    return {
-      top: 75,
-      left: 80,
-      width: window.innerWidth,
-      height: 20,
-      lineHeight: 20,
-      fontSize: 12
-    };
+  getRobotName(robot){
+    if (robot != undefined){
+      return robot['name']
+    }
   }
 
-  getImageStyle() {
-    return {
-      top: 30,
-      left: 80,
-      width: 40,
-      height: 40
-    };
+  getTextStyle(robot) {
+    if (robot != undefined){
+      return {
+        top: robot['y'] + 45,
+        left: robot['x'],
+        width: window.innerWidth,
+        height: 20,
+        lineHeight: 20,
+        fontSize: 12
+      };
+    }
+  }
+
+  getImageStyle(robot) {
+    if (robot != undefined){
+      console.log("test:", robot);
+      return {
+        top: robot['y'],
+        left: robot['x'],
+        width: 40,
+        height: 40
+      };
+    }
   } 
   
   render() {
     const imageStyle = this.getImageStyle();
     const textStyle = this.getTextStyle();
+    const game = this.state.game;
 
     return (
       <div>
         Game
       <Surface width={surfaceWidth} height={surfaceHeight} left={0} top={0}>
-      <Image style={imageStyle} src="imgs/robot2.png" />
-      <Image style={imageStyle} src="imgs/robot1.png" />
-      <Text style={textStyle}>test</Text>
+      <Image style={this.getImageStyle(game[0])} src="imgs/robot1.png" />
+      <Image style={this.getImageStyle(game[1])} src="imgs/robot2.png" />
+      <Text style={this.getTextStyle(game[0])}>{this.getRobotName(game[0])}</Text>
+      <Text style={this.getTextStyle(game[1])}>{this.getRobotName(game[1])}</Text>
       </Surface>
       </div>
     );
