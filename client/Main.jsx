@@ -12,7 +12,7 @@ class Main extends React.Component {
       robot: {}
     }
     props.socket.on('server:robot:retrieved', (robot) => {
-      console.log('robot received', robot);
+      // console.log('robot received', robot);
       this.setState({
         robot: robot
       });

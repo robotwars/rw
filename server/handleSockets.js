@@ -26,10 +26,6 @@ module.exports = function(config) {
         socket.emit('server:robot:retrieved', robot);
       });
 
-    // Send a session token to the user
-    // create a robot for this user
-    // socket.emit('news', { hello: 'world' });
-
     // Handle events from the user
 
     // When user updated information about their robot
