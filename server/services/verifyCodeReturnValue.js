@@ -8,19 +8,17 @@ module.exports = function(result) {
   // try and chai plugin
   console.log('verifyCodeReturnValue', result);
 
-  // Get result from a sandboxed environment
-  // var result = {
+  // Example expected result
+  // {
   //   bearTo: 90,
   //   move: 1,
   //   aimTo: 90,
   //   useWeapon: 'saw'
   // }
-    
-  
+
   return new bluebird.Promise(function(resolve, reject) {
     try {
       expect(result).to.be.an('object');
-      console.log('object ok');
 
       // Check bearTo
       expect([undefined, 0, 90, 180, 270]).to.include(result.bearTo);
@@ -38,7 +36,7 @@ module.exports = function(result) {
       resolve('Good');
     } catch (e) {
       console.log('Bad user!');
-      console.log(e);
+      // console.log(e);
       reject(e);
     }
   });
