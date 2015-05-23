@@ -4,10 +4,11 @@ var getRobot      = require('./services/getRobot');
 var saveRobot     = require('./services/saveRobot');
 var getRobotCode  = require('./services/getRobotCode');
 var saveRobotCode = require('./services/saveRobotCode');
+var verifyCode    = require('./services/verifyCode.js');
+var runCode       = require('./services/runCode.js');
 
 module.exports = function(config) {
   var io             = config.io;
-  var verifyCode  = require('./services/verifyCode.js');
   var dbConfig       = config.dbConfig;
 
   // user connected
@@ -28,7 +29,6 @@ module.exports = function(config) {
     var gc = getRobotCode(dbConfig, userId);
 
     bluebird.join(gr, gc).then(function(results) {
-        console.log(robot);
         var robot = results[0];
         var code = results[1];
         socket.emit('server:robot:retrieved', robot, code);
@@ -48,7 +48,7 @@ module.exports = function(config) {
     // User has updated and hit save on the code editor
     socket.on('user:code:updated', function(data) {
       var source = data.source;
-      var errors = verifyCode(source);
+      var errors = runCode(source);
       // if (errors.length) {
       //   // send message to user
       // } else {

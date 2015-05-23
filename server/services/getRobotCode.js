@@ -9,7 +9,7 @@ module.exports = function(dbConfig, userId) {
     .orderBy('createdAt')
     .run()
     .then(function(results) {
-      console.log(results)
+      // console.log(results)
       return results.pop();
     });
 }
