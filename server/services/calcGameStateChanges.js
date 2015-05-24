@@ -22,13 +22,52 @@ module.exports = function(args) {
   }
 
   // Is there a robot at this position
-  function findRobotAtPos(x, y){
-    var robot = _.find(args.responses,function(r){
-      return r.robotId == robot.id;
+  function findRobotAtPos(robots, x, y){
+    var robot = _.find(robots,function(r){
+      return r.x == x && r.y == y;
     })
     return robot;
   }
-  
+
+  // colision detection and move back & take health off both (call this a RAM!)
+  function ramRobot(robot, x, y){
+    var robotEnemy = findRobotAtPos(robots, x, y)
+    if(robotEnemy){
+      // You just rammed someone!
+      robot.actions = ["RAM"]
+      return robotEnemy
+    }else{
+      robot.actions = []
+    }
+  }  
+
+  function moveRight(robot){
+    var robotEnemy = ramRobot(robot, robot.x + 1, robot.y)
+    if(robotEnemy == undefined){
+      robot.x += 1;
+    }
+  }
+
+  function moveLeft(robot){
+    var robotEnemy = ramRobot(robot, robot.x - 1, robot.y)
+    if(robotEnemy == undefined){
+      robot.x -= 1;
+    }
+  }
+
+  function moveUp(robot){
+    var robotEnemy = ramRobot(robot, robot.x, robot.y - 1)
+    if(robotEnemy == undefined){
+      robot.y -= 1;
+    }
+  }
+
+  function moveDown(robot){
+    var robotEnemy = ramRobot(robot, robot.x, robot.y + 1)
+    if(robotEnemy == undefined){
+      robot.y += 1;
+    }
+  }
 
   if (!args.responses)     throw new 'response is required';
   if (!args.prevGameState) throw new 'prevGameState is required';
@@ -50,34 +89,29 @@ module.exports = function(args) {
     
     // look at the move and change x, y accordingly
     if(response.bearTo == 0){
-      if(response.move > 0){
-        robot.y -= 1;
-      }else if(response.move < 0 && robot.y != gameState.y){
-        robot.y += 1;
+      if(response.move > 0){    // UP
+        moveUp(robot)
+      }else if(response.move < 0 && robot.y != gameState.y){ // DOWN
+        moveDown(robot)
       }
     }else if(response.bearTo == 90){
-      if(response.move > 0 && robot.x != gameState.x){
-        robot.x += 1;
-      }else if(response.move < 0){
-        robot.x -= 1;
+      if(response.move > 0 && robot.x != gameState.x){ // RIGHT
+        moveRight(robot)
+      }else if(response.move < 0){ // LEFT
+        moveLeft(robot)
       }
     }else if(response.bearTo == 180){
-      if(response.move > 0){
-        robot.y += 1;
-      }else if(response.move < 0){
-        robot.y -= 1;
+      if(response.move > 0){    // DOWN
+        moveDown(robot)
+      }else if(response.move < 0){ // UP
+        moveUp(robot)
       }
     }else if(response.bearTo == 270){
-      if(response.move > 0){
-        robot.x -= 1;
-      }else if(response.move < 0){
-        robot.x += 1;
+      if(response.move > 0){    // LEFT
+        moveLeft(robot)
+      }else if(response.move < 0){ // RIGHT
+        moveRight(robot)
       }
-    }
-
-    // colision detection and move back & take health off both (call this a RAM!)
-    if(robot.x){
-
     }
 
     // weapons!!! Let's start with saw.
