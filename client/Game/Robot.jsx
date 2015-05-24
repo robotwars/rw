@@ -5,18 +5,24 @@ const Surface = ReactCanvas.Surface;
 const Group = ReactCanvas.Group;
 const Image = ReactCanvas.Image;
 const Text = ReactCanvas.Text;
-const surfaceWidth = 600;
-const surfaceHeight = 600;
 
 class Robot extends React.Component {
+
+  getRobotTop() {
+    return this.props.robot.y * this.props.blockSize
+  }
+
+  getRobotLeft() {
+    return this.props.  robot.x * this.props.blockSize;
+  }
 
   // Position the robot name under the robot
   getTextStyle() {
     const robot = this.props.robot;
 
     return {
-      top:   robot.y * this.props.blockSize,
-      left:   robot.x * this.props.blockSize,
+      top:    this.getRobotTop(),
+      left:   this.getRobotLeft(),
       width: window.innerWidth,
       height: 20,
       lineHeight: 20,
@@ -29,30 +35,56 @@ class Robot extends React.Component {
     const robot = this.props.robot;
 
     return {
-      top:   robot.y * this.props.blockSize,
-      left:   robot.x * this.props.blockSize,
-      width: this.props.blockSize,
+      top:    this.getRobotTop(),
+      left:   this.getRobotLeft(),
+      width:  this.props.blockSize,
+      height: this.props.blockSize
+    };
+
+  }
+
+  // Position the robot
+  getHealthImageStyle() {
+    const robot = this.props.robot;
+    const imgW = this.props.blockSize * robot.health / 100;
+
+    return {
+      top:    this.getRobotTop(),
+      left:   this.getRobotLeft(),
+      width:  imgW,
       height: this.props.blockSize
     };
 
   } 
-  
+
+  getHealthImage() {
+    const robot = this.props.robot;
+
+    if (robot.health > 30) {
+      return '/imgs/health-green.png';
+    } else {
+      return '/imgs/health-red.png';
+    }
+  }
+
   // The rendering...
   render() {
-    const imageStyle = this.getImageStyle();
-    const textStyle = this.getTextStyle();
-    const robot = this.props.robot;
-    const name = robot.name;
+    const imageStyle       = this.getImageStyle();
+    const healthImageStyle = this.getHealthImageStyle();
+    const textStyle        = this.getTextStyle();
+    const robot            = this.props.robot;
+    const name             = robot.name;
+    const healthImg        = this.getHealthImage();
 
     // const styles = {
     //   top:  robot.y * this.props.blockSize,
     //   left: robot.x * this.props.blockSize,
     // }
 
-
     return (
       <Group>
         <Image style={imageStyle} src="imgs/robot1.png" />
+        <Image style={healthImageStyle} src={healthImg} />
         <Text style={textStyle}>{name}</Text>
       </Group>
     );
@@ -62,7 +94,8 @@ class Robot extends React.Component {
 }
 
 Robot.propTypes = {
-  robot: PT.object.isRequired
+  robot:     PT.object.isRequired,
+  blockSize: PT.number.isRequired
 }
 
 export default Robot;
