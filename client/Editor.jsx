@@ -72,10 +72,12 @@ class Editor extends React.Component {
             onChange={this.onChange.bind(this)} />
         </div>
         <div className="mt1">
-          <button onClick={this.onSave.bind(this)}>Send</button>
-        </div>
-        <div className='mt1'>
-          <Messages socket={this.props.socket} />
+          <div className='col col-3'>
+            <button className='button' onClick={this.onSave.bind(this)}>Send</button>
+          </div>
+          <div className='col col-9'>
+            <Messages socket={this.props.socket} />
+          </div>
         </div>
       </section>
     );

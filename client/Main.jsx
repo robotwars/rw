@@ -2,6 +2,7 @@ import React      from 'react';
 import Game       from './Game.jsx';
 import Properties from './Properties.jsx';
 import Editor     from './Editor.jsx';
+import Header     from './Header.jsx';
 const  PT         =    React.PropTypes;
 
 import './Main.less';
@@ -33,9 +34,7 @@ class Main extends React.Component {
 
     return (
       <div className="Main container">
-        <div className='clearfix'>
-          <img src="/imgs/logo.png" alt="Robot Wars" />
-        </div>
+        <Header socket={socket} />
         <div className='clearfix'>
           <div className="col col-7">
             <Game
