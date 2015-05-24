@@ -62,7 +62,8 @@ class Help extends React.Component {
   bearTo: 270,
   move: 1,
   aimTo: 90,
-  useWeapon: "flame"
+  useWeapon: "flame",
+  logs: []
 }
         `}
         </code>
