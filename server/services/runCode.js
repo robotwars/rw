@@ -20,8 +20,15 @@ module.exports = function(args) {
     var sb = new VM.VM({timeout: 500});
 
     // Run the code in a sandbox.
-    var result = sb.run(wrapped);
-    resolve(result);
+    var result;
+    try {
+      // console.log(wrapped);
+      result = sb.run(wrapped);
+    } catch(e) {
+      return reject(e);
+    }
+
+    return resolve(result);
   });
 
 }

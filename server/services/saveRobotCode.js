@@ -16,6 +16,8 @@ module.exports = function(args) {
     createdAt: new Date()
   }
 
+  // console.log('will save code', data)
+
   return r.db(dbConfig.db)
     .table('codes')
     .insert(data)

@@ -45,7 +45,9 @@ The function will receive args like:
 
 ```
 {
- 
+  status: {
+    health: 100
+  } 
 }
 ```
 
