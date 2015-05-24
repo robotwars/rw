@@ -9,9 +9,8 @@ module.exports = function(args) {
   if (!robot)             throw new Error('robot is expected');
   if (!robot.id)          throw new Error('robot.id is expected');
 
-  function buildRadar() {
-
-    var robots = _(gameState.robots)
+  function buildRadarRobots() {
+    return _(gameState.robots)
       .reject(function(otherRobot) {
         return robot.id === otherRobot.id
       })
@@ -25,8 +24,21 @@ module.exports = function(args) {
         return otherRobot.x > 3 || otherRobot.y > 3;
       })
       .value();
+  }
+
+  function buildRadarWalls() {
     return {
-      robots: robots
+      0:   robot.y - 0,
+      90:  gameState.x - robot.x,
+      180: gameState.y - robot.y,
+      270: robot.x - 0
+    }
+  }
+
+  function buildRadar() {
+    return {
+      robots: buildRadarRobots(),
+      walls:  buildRadarWalls()
     }
   }
 
@@ -36,7 +48,6 @@ module.exports = function(args) {
     }
   }
 
-  // TODO calc the inputs for the robot
   return {
     radar: buildRadar(),
     status: buildState()
