@@ -7,6 +7,7 @@ require('codemirror/mode/javascript/javascript');
 
 import '../node_modules/codemirror/lib/codemirror.css';
 import '../node_modules/codemirror/theme/solarized.css';
+import './Editor.less';
 
 const PT          = React.PropTypes;
 
@@ -62,13 +63,14 @@ class Editor extends React.Component {
     const code         = this.state.code;
     const socket       = this.props.socket;
     const source       = code.source;
+    const textAreaStyle = {minHeight: '10em'};
 
     return (
       <section className='Editor mt1'>
         <div>
           <Codemirror
             style={{border:'1px solid black'}}
-            textAreaStyle={{minHeight: '5em'}}
+            textAreaStyle={textAreaStyle}
             value={source}
             mode='javascript'
             theme='solarized'
