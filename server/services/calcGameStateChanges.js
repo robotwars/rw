@@ -29,12 +29,22 @@ module.exports = function(args) {
     return robot;
   }
 
+  function damageRobot(robot, damage){
+    if(robot.health > 0) {
+      robot.health -= damage;
+    }else{
+      robot.health = 0;
+    }
+  }
+
   // colision detection and move back & take health off both (call this a RAM!)
   function ramRobot(robot, x, y){
     var robotEnemy = findRobotAtPos(robots, x, y)
     if(robotEnemy){
       // You just rammed someone!
       robot.actions = ["RAM"]
+      damageRobot(robot, 1)
+      damageRobot(robotEnemy, 2)
       return robotEnemy
     }else{
       robot.actions = []
