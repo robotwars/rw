@@ -36,6 +36,15 @@ module.exports = function(args) {
     }else{
       robot.health = 0;
     }
+    checkDeadRobot(robot);
+  }
+
+  function checkDeadRobot(robot){
+    // if there a robot where that robot is attacking take health off other robot
+    if (robot.health <= 0){
+      robot.timeout = 2000;
+      robot.died += 1;
+    }
   }
 
   // colision detection and move back & take health off both (call this a RAM!)
@@ -44,8 +53,9 @@ module.exports = function(args) {
     if(robotEnemy){
       // You just rammed someone!
       robot.actions = ["RAM"]
-      damageRobot(robot, 1)
-      damageRobot(robotEnemy, 2)
+      robot.score += 20;
+      damageRobot(robot, 1);
+      damageRobot(robotEnemy, 2);
       return robotEnemy
     }else{
       robot.actions = []
@@ -90,7 +100,11 @@ module.exports = function(args) {
 
   _.each(robots, function(robot) {
     // Check if the robot is dead!
-    if (robot.health == 0) { return robot }
+    if (robot.health == 0) { 
+      robot.timeout -= 100
+      if (robot.timeout <= 0){ robot.health = 100 }
+      return robot
+    }
 
     var response = findRobot(robot)
     console.log("RESPONSE", response)
@@ -131,8 +145,6 @@ module.exports = function(args) {
     }
 
     // detect which weapon is in use & which direction and if there is a robot in there
-
-    // if there a robot where that robot is attacking take health off other robot
 
     
     // Check boundaries
