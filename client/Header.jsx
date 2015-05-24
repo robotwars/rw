@@ -13,8 +13,9 @@ class Header extends React.Component {
 
   onHelp(event) {
     event.preventDefault();
+    let shown = this.state.helpShown;
     this.setState({
-      helpShown: true
+      helpShown: !shown
     });
   }
 
