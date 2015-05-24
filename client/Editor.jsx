@@ -1,6 +1,7 @@
 import React            from 'react';
 import Codemirror       from 'react-code-mirror';
 import Messages         from './Editor/Messages.jsx';
+import Log              from './Log.jsx';
 import getTemplateCode  from './services/getTemplateCode';
 require('codemirror/mode/javascript/javascript');
 
@@ -56,8 +57,11 @@ class Editor extends React.Component {
   }
 
   render() {
-    const code    = this.state.code;
-    const source  = code.source;
+    const robot        = this.props.robot;
+    const robotState   = this.props.robotState;
+    const code         = this.state.code;
+    const socket       = this.props.socket;
+    const source       = code.source;
 
     return (
       <section>
@@ -76,8 +80,13 @@ class Editor extends React.Component {
             <button className='button' onClick={this.onSave.bind(this)}>Send</button>
           </div>
           <div className='col col-9'>
-            <Messages socket={this.props.socket} />
+            <Messages socket={socket} />
           </div>
+        </div>
+        <div className='mt1'>
+          <Log
+            socket={socket}
+            robotState={robotState} />
         </div>
       </section>
     );
@@ -86,8 +95,10 @@ class Editor extends React.Component {
 }
 
 Editor.propTypes = {
-  socket: PT.object.isRequired,
-  code:   PT.object.isRequired
+  socket:        PT.object.isRequired,
+  robot:         PT.object,
+  code:          PT.object.isRequired,
+  robotState:    PT.object.isRequired
 }
 
 export default Editor;
