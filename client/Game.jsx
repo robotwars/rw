@@ -14,32 +14,14 @@ class Game extends React.Component {
 
   constructor(props) {
     super(props);
-    // var robot1 = {
-    //   id: 1,
-    //   name: 'Foo',
-    //   x: 1,
-    //   y: 4
-    // }
-    // var robot2 = {
-    //   id: 2,
-    //   name: 'Sonny',
-    //   x: 10,
-    //   y: 4
-    // }
     this.state = {robots: []}
 
     props.socket.on('server:loop', (state) => {
-      // console.log(state.robots[0]);
-      // this.setState({robot: state.robots[0]})
-      //this.setState({x: state.robots[0]['x'], y: state.robots[0]['y']})
       this.setState({
         robots: state.robots
       });
-
     });
   }
-
-
 
   renderRobots() {
     return _.map(this.state.robots, function(robot) {
@@ -58,9 +40,7 @@ class Game extends React.Component {
         </Surface>
       </div>
     );
-
   }
-
 }
 
 Game.propTypes = {
