@@ -1,6 +1,6 @@
 var gameloop    = require('node-gameloop');
 var runLoop     = require('./services/runLoop');
-var timesPerSec = 4;
+var timesPerSec = 2;
 var busy        = false;
 
 module.exports = function(config) {
