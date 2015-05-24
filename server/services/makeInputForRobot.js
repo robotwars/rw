@@ -4,10 +4,10 @@ module.exports = function(args) {
   var gameState = args.gameState;
   var robot     = args.robot;
 
-  if (!gameState)         throw new Error('gameState is expected');
-  if (!gameState.robots)  throw new Error('gameState.robots is expected');
-  if (!robot)             throw new Error('robot is expected');
-  if (!robot.id)          throw new Error('robot.id is expected');
+  if (!gameState)         throw new Error('makeInputForRobot : gameState is expected');
+  if (!gameState.robots)  throw new Error('makeInputForRobot : gameState.robots is expected');
+  if (!robot)             throw new Error('makeInputForRobot : robot is expected');
+  if (!robot.id)          throw new Error('makeInputForRobot : robot.id is expected');
 
   function buildRadarRobots() {
     return _(gameState.robots)

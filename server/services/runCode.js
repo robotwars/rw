@@ -7,9 +7,10 @@ module.exports = function(args) {
   var gameState = args.gameState;
   var robot     = args.robot;
 
-  if (!source)    throw new Error('source is expected');
-  if (!gameState) throw new Error('gameState is expected');
-  if (!robot)     throw new Error('robot is expected');
+  if (!source)    throw new Error('runCode : source is expected');
+  if (!gameState) throw new Error('runCode : gameState is expected');
+  if (!robot)     throw new Error('runCode : robot is expected');
+  if (!robot.id)  throw new Error('runCode : robot.id is expected');
 
   return new bluebird.Promise(function(resolve, reject) {
     // We need to create inputs based on the state of the game
