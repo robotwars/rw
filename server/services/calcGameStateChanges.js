@@ -31,7 +31,7 @@ module.exports = function(args) {
     if(response.bearTo == 0){
       if(response.move > 0){
         robot.y -= 1;
-      }else if(response.move < 0 && robot.y != (gameState.y - 1)){
+      }else if(response.move < 0 && robot.y != gameState.y){
         robot.y += 1;
       }
     }else if(response.bearTo == 90){
