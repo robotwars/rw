@@ -28,10 +28,18 @@ module.exports = function(args) {
     console.log("RESPONSE", response.move)
     
     // look at the move and change x, y accordingly
-    if(response.move > 0){
-      robot.x += 1;
-    }else if(response.move < 0){
-      robot.x -= 1;
+    if(response.bearTo == 90){
+      if(response.move > 0){
+        robot.x += 1;
+      }else if(response.move < 0){
+        robot.x -= 1;
+      }
+    }else if(response.bearTo == 180){
+      if(response.move > 0){
+        robot.y += 1;
+      }else if(response.move < 0){
+        robot.y -= 1;
+      }
     }
 
     // colision detection and move back & take health off both (call this a RAM!)
