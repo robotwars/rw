@@ -27,6 +27,8 @@ describe 'makeInputsForRobot', ->
       health: 100
 
     gameState =
+      x:      15
+      y:      15
       robots: [robot1, robot2]
 
   describe 'status', ->
@@ -53,4 +55,15 @@ describe 'makeInputsForRobot', ->
       robot2.x = 9
       res = getResponse(robot1)
       expect(res.radar.robots.length).to.eq(0)
+
+    describe '.walls', ->
+      it '0', ->
+        robot1.y = 0
+        res = getResponse(robot1)
+        expect(res.radar.walls[0]).to.eq(0)
+
+      it '90', ->
+        res = getResponse(robot1)
+        expect(res.radar.walls[90]).to.eq(10)
+
 

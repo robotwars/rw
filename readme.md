@@ -45,6 +45,15 @@ The function will receive args like:
 
 ```
 {
+  radar: {
+    robots: [],
+    walls: {
+      0: 1,
+      90: 14,
+      180: 1,
+      270: 14
+    }
+  },
   status: {
     health: 100
   } 
