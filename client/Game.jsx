@@ -15,8 +15,10 @@ const surfaceHeight = blockSize * 16;
 class Game extends React.Component {
 
   renderRobots() {
+    // console.log('renderRobots')
     const robots = this.props.gameState.robots;
     return _.map(robots, function(robot) {
+      // console.log(robot)
       return <Robot blockSize={blockSize} key={robot.id} robot={robot} />;
     });
   }

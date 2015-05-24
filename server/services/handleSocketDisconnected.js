@@ -22,5 +22,13 @@ module.exports = function(args) {
     robot:    robot
   }
 
-  return saveRobot(args);
+  var promise = saveRobot(args)
+    .then(function(val) {
+      // console.log(val);
+    })
+    .catch(function(err) {
+      // console.log('err', err);
+    });
+
+  return promise;
 }
