@@ -26,7 +26,8 @@ module.exports = function(args) {
       // console.log(wrapped);
       result = sb.run(wrapped);
     } catch(e) {
-      return reject(e);
+      // something broke with the user's code
+      reject(e);
     }
 
     return resolve(result);

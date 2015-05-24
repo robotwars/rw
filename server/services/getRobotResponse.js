@@ -26,7 +26,12 @@ module.exports = function(args) {
           gameState:  gameState,
           robot:      robot
         }
-        return runCode(runArgs);
+        return runCode(runArgs)
+          .catch(function (e) {
+            // user's code is broken
+            // robot should do nothing
+            return {};
+          });
       } else {
         // robot does nothing
         return {};
