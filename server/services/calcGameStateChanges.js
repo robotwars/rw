@@ -20,10 +20,19 @@ module.exports = function(args) {
   _.each(robots, function(robot) {
     var x = robot.x || 0;
     var y = robot.y || 0;
+    
+    var response = _.find(args.responses,function(r){
+      return r.robotId == robot.id;
+    })
 
+    console.log("RESPONSE", response.move)
+    
     // look at the move and change x, y accordingly
-    robot.x += 1;
-    robot.y -= 1;
+    if(response.move > 0){
+      robot.x += 1;
+    }else{
+      robot.x -= 1;
+    }
 
     // colision detection and move back & take health off both (call this a RAM!)
 
