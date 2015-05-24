@@ -24,6 +24,9 @@ class MainLoader extends React.Component {
     });
 
     props.socket.on('server:loop', (state) => {
+      // if we don't have a robot yet, then ignore
+      if (!this.state.robot) return;
+
       // get our robot
       const robots = state.robots;
       const robotState = _.find(robots, (robot) => {
