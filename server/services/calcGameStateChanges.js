@@ -29,6 +29,7 @@ module.exports = function(args) {
     return robot;
   }
 
+  // Damanage!
   function damageRobot(robot, damage){
     if(robot.health > 0) {
       robot.health -= damage;
@@ -88,6 +89,8 @@ module.exports = function(args) {
   const robots    = args.prevGameState.robots;
 
   _.each(robots, function(robot) {
+    // Check if the robot is dead!
+    if (robot.health == 0) { return robot }
 
     var response = findRobot(robot)
     console.log("RESPONSE", response)
