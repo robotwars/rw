@@ -67,7 +67,8 @@ The function is expected to return an object like:
   bearTo: 270,
   move: 1,
   aimTo: 90,
-  useWeapon: "flame"
+  useWeapon: "flame",
+  logs: []
 }
 ```
 
