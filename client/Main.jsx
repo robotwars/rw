@@ -2,6 +2,7 @@ import React      from 'react';
 import Game       from './Game.jsx';
 import _          from 'lodash'
 import Properties from './Properties.jsx';
+import Status     from './Status.jsx';
 import Editor     from './Editor.jsx';
 import Header     from './Header.jsx';
 const  PT         =    React.PropTypes;
@@ -10,43 +11,12 @@ import './Main.less';
 
 class Main extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      robot: {},
-      code:  {},
-      gameState: {},
-      robotState: {}
-    }
-    props.socket.on('server:robot:retrieved', (robot, code) => {
-      code = code || {};
-
-      this.setState({
-        robot: robot,
-        code:  code
-      });
-    });
-
-    props.socket.on('server:loop', (state) => {
-      // get our robot
-      const robots = state.robots;
-      const robotState = _.find(robots, (robot) => {
-        return robot.id === this.state.robot.id;
-      });
-      // console.log(robotState)
-      this.setState({
-        gameState: state,
-        robotState: robotState
-      });
-    });
-  }
-
   render() {
     const socket     = this.props.socket;
-    const robot      = this.state.robot;
-    const code       = this.state.code;
-    const gameState  = this.state.gameState;
-    const robotState = this.state.robotState;
+    const robot      = this.props.robot;
+    const code       = this.props.code;
+    const gameState  = this.props.gameState;
+    const robotState = this.props.robotState;
 
     return (
       <div className="Main container">
@@ -62,6 +32,9 @@ class Main extends React.Component {
             <Properties
               robot={robot}
               socket={socket} />
+            <Status
+              robot={robot}
+              robotState={robotState} />
             <Editor
               robot={robot}
               robotState={robotState}
@@ -76,7 +49,11 @@ class Main extends React.Component {
 }
 
 Main.propTypes = {
-  socket: PT.object.isRequired
+  socket:       PT.object.isRequired,
+  robot:        PT.object.isRequired,
+  robotState:   PT.object.isRequired,
+  gameState:    PT.object.isRequired,
+  code:         PT.object.isRequired
 }
 
 export default Main;

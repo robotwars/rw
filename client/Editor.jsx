@@ -64,7 +64,7 @@ class Editor extends React.Component {
     const source       = code.source;
 
     return (
-      <section>
+      <section className='Editor mt1'>
         <div>
           <Codemirror
             style={{border:'1px solid black'}}

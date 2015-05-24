@@ -5,7 +5,11 @@ const PT           = React.PropTypes;
 class Log extends React.Component {
 
   renderLogs() {
-    const logs = this.props.robotState.logs;
+    const robotState = this.props.robotState;
+    const logs = robotState.logs;
+
+    if (!logs) return;
+
     return _.map(logs, (log) => {
       console.log(log)
     })
