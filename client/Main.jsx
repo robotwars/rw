@@ -4,6 +4,8 @@ import Properties from './Properties.jsx';
 import Editor     from './Editor.jsx';
 const  PT         =    React.PropTypes;
 
+import './Main.less';
+
 class Main extends React.Component {
 
   constructor(props) {
@@ -30,20 +32,24 @@ class Main extends React.Component {
     const code  = this.state.code;
 
     return (
-      <div className="container">
-        <h1>RW</h1>
-        <div className="col col-8">
-          <Game
-            socket={socket} />
+      <div className="Main container">
+        <div className='clearfix'>
+          <img src="/imgs/logo.png" alt="Robot Wars" />
         </div>
-        <div className="col col-4">
-          <Properties
-            robot={robot}
-            socket={socket} />
-          <Editor
-            robot={robot}
-            code={code}
-            socket={socket} />
+        <div className='clearfix'>
+          <div className="col col-7">
+            <Game
+              socket={socket} />
+          </div>
+          <div className="col col-5">
+            <Properties
+              robot={robot}
+              socket={socket} />
+            <Editor
+              robot={robot}
+              code={code}
+              socket={socket} />
+          </div>
         </div>
       </div>
     );

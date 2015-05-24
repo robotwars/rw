@@ -2,13 +2,15 @@ import React       from 'react';
 import ReactCanvas from 'react-canvas';
 import _           from 'lodash';
 import Robot       from './Game/Robot.jsx';
+import './Game.less';
+
 const PT      =    React.PropTypes;
 const Surface = ReactCanvas.Surface;
 const Image = ReactCanvas.Image;
 const Text = ReactCanvas.Text;
-const surfaceWidth = 640;
-const surfaceHeight = 640;
-const blockSize = 40;
+const blockSize = 36;
+const surfaceWidth = blockSize * 16;
+const surfaceHeight = blockSize * 16;
 
 class Game extends React.Component {
 
@@ -32,12 +34,9 @@ class Game extends React.Component {
   // The rendering...
   render() {
     const robots = this.state.robots;
-    const style = {
-      border: '5px solid black'
-    }
 
     return (
-      <div style={style}>
+      <div className='Game'>
         <Surface width={surfaceWidth} height={surfaceHeight} left={0} top={0}>
           {this.renderRobots()}
         </Surface>
