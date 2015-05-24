@@ -17,6 +17,7 @@ class Game extends React.Component {
       console.log(state.robots[0]);
       // this.setState({robot: state.robots[0]})
       this.setState({x: state.robots[0]['x'], y: state.robots[0]['y']})
+      
     });
   }
 
