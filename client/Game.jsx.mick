@@ -17,8 +17,9 @@ class Game extends React.Component {
       console.log("STATE", state);
       // this.setState({robot: state.robots[0]})
       //this.setState({x: state.robots[0]['x'], y: state.robots[0]['y']})
-      // this.setState({robots: [{name: "Sonny", x: state.robots[0]['x'], y: state.robots[0]['y']}]})
-      this.setState({robots: [{name: "Sonny", x: 10, y: 300}]})
+      //this.setState({robots: [{name: "Sonny", x: 10, y: 300}]})
+      var robot = state.robots[0]
+      this.setState({robots: [{name: robot['name'], x: robot['x'], y: robot['y']}]})
     });
   }
 
@@ -46,9 +47,9 @@ class Game extends React.Component {
   // Position the robot
   getImageStyle(robots) {
     if (robots != undefined) {
-      console.log("WE HAVE THE ROBOTS", robots)
 
       if (robots.length > 0) {
+        console.log("WE HAVE THE ROBOTS", robots)
         var robot = robots[0]
         if (robot != undefined){
           return {

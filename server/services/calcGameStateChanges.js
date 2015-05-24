@@ -21,6 +21,8 @@ module.exports = function(args) {
     var x = robot.x || 0;
     var y = robot.y || 0;
 
+    
+
     if(robot.x < 600){
       robot.x = x + 40;
     }else{
