@@ -3,8 +3,7 @@ var createRobot   = require('./services/createRobot');
 var getRobot      = require('./services/getRobot');
 var saveRobot     = require('./services/saveRobot');
 var getRobotCode  = require('./services/getRobotCode');
-var saveRobotCode = require('./services/saveRobotCode');
-var verifyCode    = require('./services/verifyCode.js');
+var handleSocketUserCodeUpdated = require('./services/handleSocketUserCodeUpdated');
 
 module.exports = function(config) {
   var io             = config.io;
@@ -56,40 +55,13 @@ module.exports = function(config) {
 
     // User has updated and hit save on the code editor
     socket.on('user:code:updated', function(data) {
-      if (!data.source) throw new Error('data.source is required');
-
-      var verifyArgs = {
-        source: data.source
+      var args = {
+        data: data,
+        socket: socket,
+        dbConfig: dbConfig,
+        robotId: userId
       }
-
-      verifyCode(verifyArgs)
-        .then(function() {
-          // If the code is good, then save it in the db
-          var saveArgs = {
-            dbConfig: dbConfig,
-            robotId:  userId,
-            source:   data.source
-          }
-          console.log('Saving code');
-          return saveRobotCode(saveArgs);
-        })
-        .then(function() {
-          // Return a success message to the user
-          console.log('Code is good, saving');
-          var message = {
-            kind:  'success',
-            value: 'Saved'
-          }
-          socket.emit('server:message', message);
-        })
-        .catch(function(err) {
-          // Return a error message to the user
-          var message = {
-            kind: 'error',
-            value: err.toString()
-          }
-          socket.emit('server:message', message);
-        });
+      return handleSocketUserCodeUpdated(args)
     });
 
     socket.on('disconnect', function() {
