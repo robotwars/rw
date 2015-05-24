@@ -33,15 +33,15 @@ class Main extends React.Component {
 
     return (
       <div className="Main container">
-        <div className='clear-fix'>
+        <div className='clearfix'>
           <img src="/imgs/logo.png" alt="Robot Wars" />
         </div>
-        <div className='clear-fix'>
-          <div className="col col-8">
+        <div className='clearfix'>
+          <div className="col col-7">
             <Game
               socket={socket} />
           </div>
-          <div className="col col-4">
+          <div className="col col-5">
             <Properties
               robot={robot}
               socket={socket} />

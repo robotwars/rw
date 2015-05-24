@@ -48,12 +48,17 @@ class Editor extends React.Component {
 
     return (
       <section className='mb1'>
-        <form>
-          <input
-            value={robot.name}
-            onChange={this.onChange.bind(this)}
-            className='field-light'
-            type="text" />
+        <form className='clearfix'>
+          <div className='col col-4'>
+            <label htmlFor="">Name: </label>
+          </div>
+          <div className='col col-8'>
+            <input
+              value={robot.name}
+              onChange={this.onChange.bind(this)}
+              className='field-light full-width'
+              type="text" />
+          </div>
         </form>
       </section>
     );
