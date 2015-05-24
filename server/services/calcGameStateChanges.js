@@ -28,7 +28,13 @@ module.exports = function(args) {
     console.log("RESPONSE", response.move)
     
     // look at the move and change x, y accordingly
-    if(response.bearTo == 90){
+    if(response.bearTo == 0){
+      if(response.move > 0){
+        robot.y -= 1;
+      }else if(response.move < 0 && robot.y != (gameState.y - 1)){
+        robot.y += 1;
+      }
+    }else if(response.bearTo == 90){
       if(response.move > 0){
         robot.x += 1;
       }else if(response.move < 0){
@@ -39,6 +45,12 @@ module.exports = function(args) {
         robot.y += 1;
       }else if(response.move < 0){
         robot.y -= 1;
+      }
+    }else if(response.bearTo == 270){
+      if(response.move > 0){
+        robot.x -= 1;
+      }else if(response.move < 0){
+        robot.x += 1;
       }
     }
 
@@ -53,9 +65,10 @@ module.exports = function(args) {
     // if there a robot where that robot is attacking take health off other robot
 
     
-    if (robot.x > gameState.x) robot.x = gameState.x;
+    // Check boundaries
+    if (robot.x > gameState.x) robot.x = gameState.x - 1;
     if (robot.x < 0) robot.x = 0;
-    if (robot.y > gameState.y) robot.y = gameState.y;
+    if (robot.y > gameState.y) robot.y = gameState.y - 1;
     if (robot.y < 0) robot.y = 0;
   });
 
