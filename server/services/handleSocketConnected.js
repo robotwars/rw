@@ -1,4 +1,5 @@
 var createRobot   = require('./createRobot');
+var saveRobot     = require('./saveRobot');
 var bluebird      = require('bluebird');
 var getRobot      = require('./getRobot');
 var getRobotCode  = require('./getRobotCode');
@@ -25,6 +26,17 @@ module.exports = function(args) {
   return bluebird.join(gr, gc).then(function(results) {
       var robot = results[0];
       var code = results[1];
+      // make the robot active
       socket.emit('server:robot:retrieved', robot, code);
+
+      if (!robot.active) {
+        robot.active = true;
+        var saveArgs = {
+          dbConfig: dbConfig,
+          robot: robot
+        }
+        return saveRobot(saveArgs);
+      }
+
     });
 }
