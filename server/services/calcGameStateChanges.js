@@ -21,6 +21,9 @@ module.exports = function(args) {
     var x = robot.x || 0;
     var y = robot.y || 0;
 
+    robot.x += 1;
+    robot.y += 1;
+
     if (robot.x > gameState.x) robot.x = 0;
     if (robot.x < 0) robot.x = gameState.x;
     if (robot.y > gameState.y) robot.y = 0;
