@@ -7,8 +7,8 @@ module.exports = function(args) {
 
   return new bluebird.Promise(function(resolve, reject) {
     var state = {
-      maxX:   600,
-      maxY:   600,
+      x:      15,
+      y:      15,
       robots: robots
     };
     resolve(state);
