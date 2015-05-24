@@ -1,9 +1,7 @@
-var bluebird      = require('bluebird');
-var createRobot   = require('./services/createRobot');
-var getRobot      = require('./services/getRobot');
-var saveRobot     = require('./services/saveRobot');
-var getRobotCode  = require('./services/getRobotCode');
+var saveRobot                   = require('./services/saveRobot');
 var handleSocketUserCodeUpdated = require('./services/handleSocketUserCodeUpdated');
+var handleSocketDisconnected    = require('./services/handleSocketDisconnected');
+var handleSocketConnected       = require('./services/handleSocketConnected');
 
 module.exports = function(config) {
   var io             = config.io;
@@ -15,27 +13,13 @@ module.exports = function(config) {
     var sockerId = socket.id;
     var userId = socket.request.session.id;
 
-    // console.log('user connected, sockerId', sockerId);
-    // console.log('sessionId', userId);
-
     // Create the robot if necessary
     var args = {
       dbConfig: dbConfig,
+      socket: socket,
       robotId: userId
     };
-
-    createRobot(args);
-
-    // get the stored robot for the user
-    // and send it
-    var gr = getRobot(args);
-    var gc = getRobotCode(args);
-
-    bluebird.join(gr, gc).then(function(results) {
-        var robot = results[0];
-        var code = results[1];
-        socket.emit('server:robot:retrieved', robot, code);
-      });
+    handleSocketConnected(args);
 
     // Handle events from the user
 
@@ -65,7 +49,12 @@ module.exports = function(config) {
     });
 
     socket.on('disconnect', function() {
-      console.log('user disconnected');
+      var args = {
+        socket: socket,
+        dbConfig: dbConfig,
+        robotId: userId
+      }
+      return handleSocketDisconnected(args);
     });
   });
 }

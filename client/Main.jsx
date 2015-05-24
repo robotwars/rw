@@ -1,5 +1,6 @@
 import React      from 'react';
 import Game       from './Game.jsx';
+import _          from 'lodash'
 import Properties from './Properties.jsx';
 import Editor     from './Editor.jsx';
 import Header     from './Header.jsx';
@@ -13,11 +14,11 @@ class Main extends React.Component {
     super(props);
     this.state = {
       robot: {},
-      code:  {}
+      code:  {},
+      gameState: {},
+      robotState: {}
     }
     props.socket.on('server:robot:retrieved', (robot, code) => {
-      // console.log('robot received', robot, code);
-
       code = code || {};
 
       this.setState({
@@ -25,12 +26,27 @@ class Main extends React.Component {
         code:  code
       });
     });
+
+    props.socket.on('server:loop', (state) => {
+      // get our robot
+      const robots = state.robots;
+      const robotState = _.find(robots, (robot) => {
+        return robot.id === this.state.robot.id;
+      });
+      // console.log(robotState)
+      this.setState({
+        gameState: state,
+        robotState: robotState
+      });
+    });
   }
 
   render() {
-    const socket = this.props.socket;
-    const robot = this.state.robot;
-    const code  = this.state.code;
+    const socket     = this.props.socket;
+    const robot      = this.state.robot;
+    const code       = this.state.code;
+    const gameState  = this.state.gameState;
+    const robotState = this.state.robotState;
 
     return (
       <div className="Main container">
@@ -38,6 +54,8 @@ class Main extends React.Component {
         <div className='clearfix'>
           <div className="col col-7">
             <Game
+              robot={robot}
+              gameState={gameState}
               socket={socket} />
           </div>
           <div className="col col-5">
@@ -46,6 +64,7 @@ class Main extends React.Component {
               socket={socket} />
             <Editor
               robot={robot}
+              robotState={robotState}
               code={code}
               socket={socket} />
           </div>
