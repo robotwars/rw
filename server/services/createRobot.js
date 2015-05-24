@@ -10,7 +10,9 @@ module.exports = function(args) {
   var robot = {
     id:     args.robotId,
     name:   'Robot',
-    active: true
+    active: true,
+    x: 7,
+    y: 7
   }
 
   r.db(args.dbConfig.db)

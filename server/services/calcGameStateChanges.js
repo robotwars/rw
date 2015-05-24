@@ -78,8 +78,6 @@ module.exports = function(args) {
   const robots    = args.prevGameState.robots;
 
   _.each(robots, function(robot) {
-    var x = robot.x || 0;
-    var y = robot.y || 0;
 
     var response = findRobot(robot)
     console.log("RESPONSE", response)
