@@ -22,9 +22,9 @@ module.exports = function(args) {
   }
 
   // Is there a robot at this position
-  function findRobotAtPos(x, y){
-    var robot = _.find(args.responses,function(r){
-      return r.robotId == robot.id;
+  function findRobotAtPos(robots, x, y){
+    var robot = _.find(robots,function(r){
+      return r.x == x && r.y == y;
     })
     return robot;
   }
@@ -76,8 +76,14 @@ module.exports = function(args) {
     }
 
     // colision detection and move back & take health off both (call this a RAM!)
-    if(robot.x){
-
+    var robotEnemy = findRobotAtPos(robots, robot.x + 1,robot.y)
+    console.log("ROBOTENEMY ---> ", robotEnemy)
+    if(robotEnemy){
+      console.log("-------You are about to RAM a robot")
+      robot.x = robot.x - 1;
+      robot.actions = ["RAM"]
+    }else{
+      robot.actions = []
     }
 
     // weapons!!! Let's start with saw.
