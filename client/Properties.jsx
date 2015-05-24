@@ -8,7 +8,7 @@ class Editor extends React.Component {
     super(props);
 
     this.state = {
-      robot: props.robot
+      robot: props.robot || {}
     }
   }
 

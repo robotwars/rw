@@ -19,7 +19,10 @@ class Game extends React.Component {
     const robots = this.props.gameState.robots;
     return _.map(robots, function(robot) {
       // console.log(robot)
-      return <Robot blockSize={blockSize} key={robot.id} robot={robot} />;
+      return <Robot
+        blockSize={blockSize}
+        key={robot.id} 
+        robot={robot} />;
     });
   }
 
