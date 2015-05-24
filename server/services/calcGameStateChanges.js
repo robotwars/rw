@@ -30,7 +30,7 @@ module.exports = function(args) {
     // look at the move and change x, y accordingly
     if(response.move > 0){
       robot.x += 1;
-    }else{
+    }else if(response.move < 0){
       robot.x -= 1;
     }
 
