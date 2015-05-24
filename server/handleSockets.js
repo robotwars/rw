@@ -26,10 +26,17 @@ module.exports = function(config) {
     // When user updated information about their robot
     socket.on('user:robot:updated', function(data) {
       // console.log(data.info, socket.id);
+      // we need to filter only fields allowed
+      var givenRobot = data.robot;
+      var robot = {
+        id:   givenRobot.id,
+        name: givenRobot.name
+      }
+
       var saveArgs = {
         dbConfig: dbConfig,
         robotId:  userId,
-        robot:    data.robot
+        robot:    robot
       }
       saveRobot(saveArgs)
         .then(function() {

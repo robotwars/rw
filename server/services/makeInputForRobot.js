@@ -1,4 +1,10 @@
-var _ = require('lodash');
+var _        = require('lodash');
+var Joi      = require('joi');
+
+var schema = Joi.object().keys({
+  radar:        Joi.object(),
+  status:       Joi.object()
+});
 
 module.exports = function(args) {
   var gameState = args.gameState;
@@ -48,8 +54,12 @@ module.exports = function(args) {
     }
   }
 
-  return {
+  var inputs = {
     radar: buildRadar(),
     status: buildState()
   }
+
+  // TODO validate the inputs
+
+  return inputs;
 }
