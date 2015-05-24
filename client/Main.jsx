@@ -2,6 +2,7 @@ import React      from 'react';
 import Game       from './Game.jsx';
 import _          from 'lodash'
 import Properties from './Properties.jsx';
+import Status     from './Status.jsx';
 import Editor     from './Editor.jsx';
 import Header     from './Header.jsx';
 const  PT         =    React.PropTypes;
@@ -62,6 +63,9 @@ class Main extends React.Component {
             <Properties
               robot={robot}
               socket={socket} />
+            <Status
+              robot={robot}
+              robotState={robotState} />
             <Editor
               robot={robot}
               robotState={robotState}
