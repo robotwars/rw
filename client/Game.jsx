@@ -11,13 +11,14 @@ class Game extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {robots: [{name: "Sonny", x: 50, y: 80}, {name: "Terminator", x: 90, y: 200}]}
+    this.state = {robots: []}
 
     props.socket.on('server:loop', (state) => {
-      // console.log(state.robots[0]);
+      console.log("STATE", state);
       // this.setState({robot: state.robots[0]})
       //this.setState({x: state.robots[0]['x'], y: state.robots[0]['y']})
-      this.setState({robots: [{name: "Sonny", x: state.robots[0]['x'], y: state.robots[0]['y']}]})
+      // this.setState({robots: [{name: "Sonny", x: state.robots[0]['x'], y: state.robots[0]['y']}]})
+      this.setState({robots: [{name: "Sonny", x: 10, y: 300}]})
     });
   }
 
@@ -43,15 +44,28 @@ class Game extends React.Component {
   }
 
   // Position the robot
-  getImageStyle(robot) {
-    if (robot != undefined){
-      console.log("test:", robot);
-      return {
-        top: robot.y,
-        left: robot.x,
-        width: 40,
-        height: 40
-      };
+  getImageStyle(robots) {
+    if (robots != undefined) {
+      console.log("WE HAVE THE ROBOTS", robots)
+
+      if (robots.length > 0) {
+        var robot = robots[0]
+        if (robot != undefined){
+          return {
+            top: robot.y,
+            left: robot.x,
+            width: 40,
+            height: 40
+          };
+        }
+      } else {
+        return {
+          top: 0,
+          left: 0,
+          width: 40,
+          height: 40
+        };
+      }
     }
   } 
   
@@ -60,12 +74,13 @@ class Game extends React.Component {
     const imageStyle = this.getImageStyle();
     const textStyle = this.getTextStyle();
     const robots = this.state.robots;
+    console.log("ROBOTS", robots);
 
     return (
       <div>
       <Surface width={surfaceWidth} height={surfaceHeight} left={0} top={0}>
-      <Image style={this.getImageStyle(robots[0])} src="imgs/robot1.png" />
-      <Text style={this.getTextStyle(robots[0])}>{this.getRobotName(robots[0])}</Text>
+      <Image style={this.getImageStyle(robots)} src="imgs/robot1.png" />
+      <Text style={this.getTextStyle(robots)}>{this.getRobotName(robots)}</Text>
       </Surface>
       </div>
     );
