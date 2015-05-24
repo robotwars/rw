@@ -12,7 +12,8 @@ module.exports = function(args) {
     name:   'Robot',
     active: true,
     x: 7,
-    y: 7
+    y: 7,
+    health: 100
   }
 
   r.db(args.dbConfig.db)
