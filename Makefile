@@ -6,3 +6,9 @@ service:
 
 asset:
 	./node_modules/.bin/webpack --watch
+
+push:
+	git push mick master
+
+pull:
+	git pull mick master
