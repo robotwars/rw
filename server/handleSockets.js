@@ -56,15 +56,19 @@ module.exports = function(config) {
 
     // User has updated and hit save on the code editor
     socket.on('user:code:updated', function(data) {
-      var source = data.source;
+      if (!data.source) throw new Error('data.source is required');
 
-      verifyCode(source)
+      var verifyArgs = {
+        source: data.source
+      }
+
+      verifyCode(verifyArgs)
         .then(function() {
           // If the code is good, then save it in the db
           var saveArgs = {
             dbConfig: dbConfig,
-            robotId: userId,
-            source: source
+            robotId:  userId,
+            source:   data.source
           }
           console.log('Saving code');
           return saveRobotCode(saveArgs);

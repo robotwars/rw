@@ -45,7 +45,9 @@ The function will receive args like:
 
 ```
 {
- 
+  status: {
+    health: 100
+  } 
 }
 ```
 
@@ -56,7 +58,7 @@ The function is expected to return an object like:
   bearTo: 270,
   move: 1,
   aimTo: 90,
-  useWeapon: "flame thrower"
+  useWeapon: "flame"
 }
 ```
 
