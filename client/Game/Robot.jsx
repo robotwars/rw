@@ -46,7 +46,11 @@ class Robot extends React.Component {
   // Position the robot
   getHealthImageStyle() {
     const robot = this.props.robot;
-    const imgW = this.props.blockSize * robot.health / 100;
+    let imgW = 1;
+
+    if (robot.health > 1) {
+      imgW = this.props.blockSize * robot.health / 100;
+    }
 
     return {
       top:    this.getRobotTop(),
@@ -69,17 +73,14 @@ class Robot extends React.Component {
 
   // The rendering...
   render() {
+    const robot            = this.props.robot;
     const imageStyle       = this.getImageStyle();
     const healthImageStyle = this.getHealthImageStyle();
     const textStyle        = this.getTextStyle();
-    const robot            = this.props.robot;
     const name             = robot.name;
     const healthImg        = this.getHealthImage();
 
-    // const styles = {
-    //   top:  robot.y * this.props.blockSize,
-    //   left: robot.x * this.props.blockSize,
-    // }
+    // console.log(robot)
 
     return (
       <Group>
