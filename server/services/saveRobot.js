@@ -1,4 +1,5 @@
 var r = require('rethinkdbdash')();
+var _ = require('lodash');
 
 module.exports = function(args) {
   var dbConfig = args.dbConfig;
@@ -10,7 +11,8 @@ module.exports = function(args) {
 
   var robotId  = robot.id;
 
-  // console.log('Saving robot ', robotId, robot)
+  // filter params
+  robot = _.without(robot, 'logs');
 
   return r.db(dbConfig.db)
     .table('robots')

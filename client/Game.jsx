@@ -14,27 +14,15 @@ const surfaceHeight = blockSize * 16;
 
 class Game extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {robots: []}
-
-    props.socket.on('server:loop', (state) => {
-      this.setState({
-        robots: state.robots
-      });
-    });
-  }
-
   renderRobots() {
-    return _.map(this.state.robots, function(robot) {
+    const robots = this.props.gameState.robots;
+    return _.map(robots, function(robot) {
       return <Robot blockSize={blockSize} key={robot.id} robot={robot} />;
     });
   }
 
   // The rendering...
   render() {
-    const robots = this.state.robots;
-
     return (
       <div className='Game'>
         <Surface width={surfaceWidth} height={surfaceHeight} left={0} top={0}>
@@ -46,7 +34,8 @@ class Game extends React.Component {
 }
 
 Game.propTypes = {
-  socket: PT.object.isRequired
+  socket:    PT.object.isRequired,
+  gameState: PT.object.isRequired
 }
 
 export default Game;

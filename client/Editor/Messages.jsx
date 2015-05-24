@@ -12,7 +12,7 @@ class Messsages extends React.Component {
     }
 
     props.socket.on('server:message', (message) => {
-      console.log('server:message', message);
+      // console.log('server:message', message);
       this.setState({
         message: message
       });
