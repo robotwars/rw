@@ -15,8 +15,8 @@ class Robot extends React.Component {
     const robot = this.props.robot;
 
     return {
-      top:   robot.y * 40,
-      left:   robot.x * 40,
+      top:   robot.y * this.props.blockSize,
+      left:   robot.x * this.props.blockSize,
       width: window.innerWidth,
       height: 20,
       lineHeight: 20,
@@ -29,10 +29,10 @@ class Robot extends React.Component {
     const robot = this.props.robot;
 
     return {
-      top:   robot.y * 40,
-      left:   robot.x * 40,
-      width: 40,
-      height: 40
+      top:   robot.y * this.props.blockSize,
+      left:   robot.x * this.props.blockSize,
+      width: this.props.blockSize,
+      height: this.props.blockSize
     };
 
   } 
@@ -45,8 +45,8 @@ class Robot extends React.Component {
     const name = robot.name;
 
     // const styles = {
-    //   top:  robot.y * 40,
-    //   left: robot.x * 40,
+    //   top:  robot.y * this.props.blockSize,
+    //   left: robot.x * this.props.blockSize,
     // }
 
 

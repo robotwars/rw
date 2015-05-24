@@ -8,6 +8,7 @@ const Image = ReactCanvas.Image;
 const Text = ReactCanvas.Text;
 const surfaceWidth = 600;
 const surfaceHeight = 600;
+const blockSize = 40;
 
 class Game extends React.Component {
 
@@ -42,7 +43,7 @@ class Game extends React.Component {
 
   renderRobots() {
     return _.map(this.state.robots, function(robot) {
-      return <Robot key={robot.id} robot={robot} />;
+      return <Robot blockSize={blockSize} key={robot.id} robot={robot} />;
     });
   }
 
