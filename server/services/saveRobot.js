@@ -12,7 +12,7 @@ module.exports = function(args) {
   var robotId  = robot.id;
 
   // filter params
-  robot = _.without(robot, 'logs');
+  //robot = _.without(robot, 'logs');
 
   return r.db(dbConfig.db)
     .table('robots')
