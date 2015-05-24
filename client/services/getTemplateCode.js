@@ -8,7 +8,8 @@ function(args) {
     bearTo: undefined,
     move:   0,
     aimTo:  undefined,
-    useWeapon: undefined
+    useWeapon: undefined,
+    logs: []
   };
 }
 `;
